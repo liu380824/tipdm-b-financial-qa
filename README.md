@@ -112,6 +112,16 @@
 | 主要依赖 | fastapi 0.115、pydantic 2.10、uvicorn 0.34、httpx 0.28、PyMuPDF 1.25、pdfplumber、openpyxl 3.1、numpy 2.1、matplotlib 3.9、rank_bm25、jieba |
 | 前端 | vue 3.5、element-plus 2.13、echarts 5.6、pinia 3.0、vite 6.4、typescript 5.6 |
 
+### 可选依赖
+
+以下三项不装也能跑通主流程，代码内部均有降级处理，但会影响部分能力：
+
+| 包 | 用途 | 缺失时的表现 |
+|---|---|---|
+| `rapidocr-onnxruntime` | 扫描版 PDF 的 OCR 兜底 | 扫描件（无文本层）页面无法抽取内容，仅处理可选中文本的 PDF |
+| `openai` | `benchmark/collect_responses.py` 采集第三方模型回答 | 该脚本提示需安装，模型横评的数据采集环节不可用 |
+| `psutil` | 性能基准中的进程内存采样 | 自动回退到 Windows `ctypes` 读取工作集，不影响结论 |
+
 ---
 
 ## 快速开始
@@ -194,6 +204,17 @@ python run_batch_export.py --task2-file ./data/附件4：问题汇总.xlsx \
 
 产物写入 `result_2.xlsx`、`result_3.xlsx`，图表写入 `result/`。
 
+### 9. 复现实验
+
+```bash
+python -m benchmark.model_compare                  # 底座模型选型
+python -m ablation.run_ablation -n 3 -r 3 --judge  # 消融实验
+python -m benchmark.run_benchmark                  # 与主流大模型横向对比
+```
+
+> `run_benchmark` 需先手动把豆包、DeepSeek、秘塔 AI 的回答填入
+> `benchmark/llm_responses/*.json`（仓库已提供三份作为示例），再运行一次生成对比报告。
+
 ---
 
 ## 评测与消融
@@ -227,6 +248,32 @@ export BIGMODEL_API_KEY=...
 | `-calc_traces` | 禁用计算溯源链 |
 | `-deep_think` | 禁用深度思考 |
 | `-kb` | 禁用知识库检索 |
+
+常用命令：
+
+```bash
+python -m ablation.run_ablation                        # 默认 1 题、单次
+python -m ablation.run_ablation -n 3 -r 3              # 3 题、每条件重复 3 次（推荐）
+python -m ablation.run_ablation -n 3 -r 3 --pairwise --judge --json
+```
+
+参数：`-n` 使用前 N 道默认问题（1–7）、`-r` 每条件重复次数（≥2 启用统计）、`--pairwise` 含组合消融、`--judge` 启用 LLM-as-Judge 打分、`--json` 同时保存结构化结果。
+
+### 与主流大模型横向对比（`benchmark/run_benchmark.py`）
+
+把本系统与豆包、DeepSeek、秘塔 AI 放在同一套 **7 维度 26 子项、满分 100** 的评分体系下对比，用于验证四层架构相对裸 LLM 的附加价值。
+
+| 维度 | 分值 | 权重 |
+|---|---|---|
+| 数据准确性 | 30 | 30% |
+| 数据溯源 | 15 | 15% |
+| 分析深度 | 15 | 15% |
+| 计算可解释性 | 10 | 10% |
+| 可视化能力 | 10 | 10% |
+| 响应完整性 | 10 | 10% |
+| 抗幻觉能力 | 10 | 10% |
+
+流程：先运行一次收集本系统回答 → 手动采集三家平台回答填入 `llm_responses/*.json` → 再次运行生成对比报告。本系统在该评测中得分 87.4，位列第一。
 
 ---
 
@@ -264,6 +311,20 @@ export BIGMODEL_API_KEY=...
 - 赛题原文与附件数据版权归 **"泰迪杯"数据挖掘挑战赛组委会** 所有。仓库中的 `docs/` 仅收录赛题说明与字段说明用于理解代码，正式使用请以官方发布版本为准。
 - 官方赛题数据（附件 1–7）、构建出的数据库文件（`*.db`）与大规模中间结果均**未随仓库分发**，需按上文步骤自行准备。
 - 仓库中出现的电话号码、金额等均为赛题数据或模型生成的样例内容，不含任何真实个人信息。
+
+---
+
+## 常见问题
+
+| 现象 | 原因与处理 |
+|---|---|
+| `FileNotFoundError: config.json` | 未从模板创建配置。执行 `cp config.example.json config.json` 并填入路径与密钥 |
+| 所有脚本一启动就报密钥相关错误 | `config.json` 里四项 `api_key` 都要填（embedding / llm / intent_llm / extract_llm） |
+| 财报 PDF 抽不出内容 | 多为扫描件（无文本层）。安装可选依赖 `pip install rapidocr-onnxruntime` 启用 OCR 兜底 |
+| `python -m benchmark.model_compare` 报密钥为空 | 需设置环境变量 `SILICONFLOW_API_KEY`、`BIGMODEL_API_KEY` |
+| 前端打不开 / 请求失败 | 后端需先启动（`python api_server.py`，默认 127.0.0.1:8000），前端与后端需同时运行 |
+| 数据库文件很大 | 属正常现象，构建产物（`*.db`）已被 `.gitignore` 排除，不会进仓库 |
+| 想换模型 | 前端「系统设置」页可在线切换，无需重启服务；或改 `config.json` 后重启 |
 
 ---
 

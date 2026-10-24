@@ -238,4 +238,4 @@ def create_financial_database(db_path='financial_reports.db'):
 
 if __name__ == '__main__':
     db_path = create_financial_database(CONFIG['database']['path'])
-    print(f"\n✓ 数据库已成功创建: {db_path}".encode('utf-8').decode('gbk', 'ignore'))
+    print(f"\n[OK] 数据库已成功创建: {db_path}")
