@@ -1,0 +1,86 @@
+[
+  {
+    "id": "B1030",
+    "category": "事实查询",
+    "difficulty": "easy",
+    "source": "result_2.xlsx",
+    "question": "从资产负债表中提取片仔癀（600436）2022年全年的资产总额、负债总额、股东权益总额（单位：万元）",
+    "key_entities": ["片仔癀", "600436", "2022", "资产总额", "负债总额", "股东权益总额"],
+    "expects_chart": true,
+    "expects_calculation": false,
+    "expects_provenance": true,
+    "description": "单公司多指标精确查询——通用LLM会尝试回答但数值大概率不准确"
+  },
+  {
+    "id": "B1008",
+    "category": "事实查询",
+    "difficulty": "easy",
+    "source": "result_2.xlsx",
+    "question": "香雪制药2024年研发费用是多少",
+    "key_entities": ["香雪制药", "2024", "研发费用"],
+    "expects_chart": true,
+    "expects_calculation": false,
+    "expects_provenance": true,
+    "description": "单公司单指标查询（原题Q1）——通用LLM会给出一个数但无法保证准确"
+  },
+  {
+    "id": "B1051",
+    "category": "多公司对比",
+    "difficulty": "medium",
+    "source": "result_2.xlsx",
+    "question": "对比白云山、云南白药、片仔癀2025年第三季度的核心盈利能力指标（销售毛利率、销售净利率、ROE），用雷达图展示差异",
+    "key_entities": ["白云山", "云南白药", "片仔癀", "2025", "销售毛利率", "销售净利率", "ROE", "雷达图"],
+    "expects_chart": true,
+    "expects_calculation": true,
+    "expects_provenance": true,
+    "description": "三公司多指标对比+雷达图——考察多实体处理、可视化和计算能力"
+  },
+  {
+    "id": "B1034",
+    "category": "指标计算",
+    "difficulty": "medium",
+    "source": "result_2.xlsx",
+    "question": "计算云南白药（000538）2025年第三季度营业总收入的环比增长率（环比增长率=(本季度值-上季度值)/上季度值*100），并展示2025年第二季度和第三季度的营业总收入（万元）及环比增长率（保留两位小数）。",
+    "key_entities": ["云南白药", "000538", "2025", "第三季度", "营业总收入", "环比增长率"],
+    "expects_chart": false,
+    "expects_calculation": true,
+    "expects_provenance": true,
+    "description": "公式计算+多期数据——考察计算溯源链，通用LLM可能编造数值"
+  },
+  {
+    "id": "B1010",
+    "category": "趋势分析",
+    "difficulty": "medium",
+    "source": "result_2.xlsx",
+    "question": "对比白云山（600332）2022年至2025年第三季度的\"营业总收入同比增长率\"，展示各报告期的增长率数据，并生成趋势折线图。",
+    "key_entities": ["白云山", "600332", "2022", "2025", "营业总收入同比增长率", "折线图"],
+    "expects_chart": true,
+    "expects_calculation": true,
+    "expects_provenance": true,
+    "description": "单公司多年同比增长率+折线图——需要精确多期数据"
+  },
+  {
+    "id": "B2067",
+    "category": "深度分析",
+    "difficulty": "hard",
+    "source": "result_3.xlsx",
+    "question": "东阿阿胶2022-2025年第三季度营业总收入复合增长率达20%，远超行业均值，请结合财务数据和研报（如新品上市、市场拓展），分析高速增长的核心驱动力。",
+    "key_entities": ["东阿阿胶", "2022-2025", "第三季度", "营业总收入", "复合增长率", "研报"],
+    "expects_chart": false,
+    "expects_calculation": true,
+    "expects_provenance": true,
+    "description": "增长归因分析——需要多年数据+研报知识库综合推理"
+  },
+  {
+    "id": "B2059",
+    "category": "综合分析",
+    "difficulty": "hard",
+    "source": "result_3.xlsx",
+    "question": "针对三九、白云山、云南白药、片仔癀等企业，查询2022-2025年第三季度的营业总收入；计算各年度的同比增长率；生成营收增长趋势折线图；对比上述公司与行业整体的增长差异。",
+    "key_entities": ["三九", "白云山", "云南白药", "片仔癀", "2022-2025", "营业总收入", "同比增长率", "折线图", "行业"],
+    "expects_chart": true,
+    "expects_calculation": true,
+    "expects_provenance": true,
+    "description": "四公司四年+同比计算+行业对比+折线图——综合难度最高"
+  }
+]

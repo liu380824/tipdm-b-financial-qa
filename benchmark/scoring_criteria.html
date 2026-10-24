@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>基准评分标准体系</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; background: #f8fafc; padding: 30px; margin: 0; }
+  .container { max-width: 860px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.08); padding: 36px 40px; }
+  h1 { text-align: center; font-size: 22px; color: #1e293b; margin-bottom: 6px; }
+  .subtitle { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 28px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead th { background: #1e293b; color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+  thead th:nth-child(2), thead th:nth-child(3), thead th:nth-child(5) { text-align: center; }
+  tbody td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+  tbody tr:hover { background: #f1f5f9; }
+  .dim-name { font-weight: 700; font-size: 14px; }
+  .score-cell { text-align: center; font-weight: 700; font-size: 16px; }
+  .pct-cell { text-align: center; color: #64748b; }
+  .item-score { text-align: center; font-weight: 600; color: #334155; }
+  .bar { display: inline-block; height: 6px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
+  .footer-row td { background: #f1f5f9; font-size: 12px; color: #64748b; padding: 12px; }
+  .footer-row td:first-child { font-weight: 700; color: #1e293b; font-size: 14px; }
+  .total-score { font-size: 18px; font-weight: 800; color: #1e293b; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>基准对比实验 — 评分标准体系</h1>
+  <p class="subtitle">Benchmark Scoring Criteria · 7 维度 · 满分 100 分</p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:115px;">评估维度</th>
+        <th style="width:55px;text-align:center;">满分</th>
+        <th style="width:45px;text-align:center;">权重</th>
+        <th>评分子项</th>
+        <th style="width:55px;text-align:center;">分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 数据准确性 -->
+      <tr>
+        <td rowspan="4" class="dim-name" style="color:#3b82f6;"><span class="bar" style="width:50px;background:#3b82f6;"></span>数据准确性</td>
+        <td rowspan="4" class="score-cell">30</td>
+        <td rowspan="4" class="pct-cell">30%</td>
+        <td>① 查询成功并返回目标数据</td>
+        <td class="item-score">10</td>
+      </tr>
+      <tr><td>② 回答与问题意图匹配</td><td class="item-score">8</td></tr>
+      <tr><td>③ 覆盖问题中的核心实体</td><td class="item-score">6</td></tr>
+      <tr><td>④ 包含实质性数值（非空洞文字）</td><td class="item-score">6</td></tr>
+
+      <!-- 数据溯源 -->
+      <tr>
+        <td rowspan="4" class="dim-name" style="color:#10b981;"><span class="bar" style="width:25px;background:#10b981;"></span>数据溯源</td>
+        <td rowspan="4" class="score-cell">15</td>
+        <td rowspan="4" class="pct-cell">15%</td>
+        <td>① 数据来源可追溯（引用机制）</td>
+        <td class="item-score">6</td>
+      </tr>
+      <tr><td>② 字段/文本级归因精度</td><td class="item-score">3</td></tr>
+      <tr><td>③ 来源标注完整性</td><td class="item-score">2</td></tr>
+      <tr><td>④ 深度溯源（多源交叉验证）</td><td class="item-score">4</td></tr>
+
+      <!-- 计算可解释 -->
+      <tr>
+        <td rowspan="3" class="dim-name" style="color:#ef4444;"><span class="bar" style="width:17px;background:#ef4444;"></span>计算可解释</td>
+        <td rowspan="3" class="score-cell">10</td>
+        <td rowspan="3" class="pct-cell">10%</td>
+        <td>① 计算过程可追踪</td>
+        <td class="item-score">4</td>
+      </tr>
+      <tr><td>② 公式/推导步骤展示</td><td class="item-score">3</td></tr>
+      <tr><td>③ 计算结果可验证</td><td class="item-score">3</td></tr>
+
+      <!-- 可视化能力 -->
+      <tr>
+        <td rowspan="4" class="dim-name" style="color:#a855f7;"><span class="bar" style="width:17px;background:#a855f7;"></span>可视化能力</td>
+        <td rowspan="4" class="score-cell">10</td>
+        <td rowspan="4" class="pct-cell">10%</td>
+        <td>① 图表生成与展示</td>
+        <td class="item-score">4</td>
+      </tr>
+      <tr><td>② 图表类型与问题匹配</td><td class="item-score">2</td></tr>
+      <tr><td>③ 数据表格 + 图表双重展示</td><td class="item-score">2</td></tr>
+      <tr><td>④ 平台可视化能力</td><td class="item-score">2</td></tr>
+
+      <!-- 分析深度 -->
+      <tr>
+        <td rowspan="4" class="dim-name" style="color:#f59e0b;"><span class="bar" style="width:25px;background:#f59e0b;"></span>分析深度</td>
+        <td rowspan="4" class="score-cell">15</td>
+        <td rowspan="4" class="pct-cell">15%</td>
+        <td>① 文本分析质量（长度 + 关键词密度）</td>
+        <td class="item-score">5</td>
+      </tr>
+      <tr><td>② 数据洞察与归因分析</td><td class="item-score">4</td></tr>
+      <tr><td>③ 多维度覆盖（趋势/对比/原因/建议）</td><td class="item-score">4</td></tr>
+      <tr><td>④ 结构化表达（分段/列表/总结）</td><td class="item-score">2</td></tr>
+
+      <!-- 响应完整性 -->
+      <tr>
+        <td rowspan="4" class="dim-name" style="color:#0ea5e9;"><span class="bar" style="width:17px;background:#0ea5e9;"></span>响应完整性</td>
+        <td rowspan="4" class="score-cell">10</td>
+        <td rowspan="4" class="pct-cell">10%</td>
+        <td>① 核心实体覆盖</td>
+        <td class="item-score">3</td>
+      </tr>
+      <tr><td>② 问题要素全面回应</td><td class="item-score">3</td></tr>
+      <tr><td>③ 回答结构丰富度</td><td class="item-score">2</td></tr>
+      <tr><td>④ 后续建议与扩展分析</td><td class="item-score">2</td></tr>
+
+      <!-- 抗幻觉能力 -->
+      <tr>
+        <td rowspan="3" class="dim-name" style="color:#64748b;"><span class="bar" style="width:17px;background:#64748b;"></span>抗幻觉能力</td>
+        <td rowspan="3" class="score-cell">10</td>
+        <td rowspan="3" class="pct-cell">10%</td>
+        <td>① 数值与标准答案一致</td>
+        <td class="item-score">4</td>
+      </tr>
+      <tr><td>② 无自相矛盾表述</td><td class="item-score">3</td></tr>
+      <tr><td>③ 对不确定内容恰当表达</td><td class="item-score">3</td></tr>
+
+      <!-- 合计 -->
+      <tr class="footer-row">
+        <td>合计</td>
+        <td class="total-score" style="text-align:center;">100</td>
+        <td style="text-align:center;font-weight:700;">100%</td>
+        <td colspan="2">所有系统采用相同评分标准。本系统通过结构化字段自动评测，外部LLM通过文本分析 + 平台能力元数据评测。</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

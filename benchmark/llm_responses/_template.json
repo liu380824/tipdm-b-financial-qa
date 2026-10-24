@@ -1,0 +1,98 @@
+{
+  "_comment": "复制此文件并重命名为 doubao.json / deepseek.json / mita.json，填入各系统的回答",
+  "system_name": "系统名称（如：豆包/DeepSeek/秘塔AI）",
+  "system_version": "版本号或模型名称",
+  "collection_date": "2026-04-21",
+  "responses": [
+    {
+      "question_id": "B1030",
+      "question_text": "从资产负债表中提取片仔癀（600436）2022年全年的资产总额、负债总额、股东权益总额（单位：万元）",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B1008",
+      "question_text": "香雪制药2024年研发费用是多少？销售费用是多少？",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B1051",
+      "question_text": "对比白云山、云南白药、片仔癀2025年第三季度的核心盈利能力指标（销售毛利率、销售净利率、ROE），用雷达图展示差异",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B1028",
+      "question_text": "对比白云山、云南白药、片仔癀2022-2025年第三季度的净利润（万元），生成多系列折线图展示趋势",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B1034",
+      "question_text": "计算云南白药2025年第三季度营业总收入的环比增长率，并展示Q2和Q3数据",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B1010",
+      "question_text": "对比白云山2022年至2025年第三季度的营业总收入同比增长率，生成趋势折线图",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B1045",
+      "question_text": "云南白药2022-2025年第三季度的资产负债率变化趋势",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B2060",
+      "question_text": "2025年第三季度香雪制药净利润同比下降50%，请结合财务数据和个股研报分析核心原因",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B2067",
+      "question_text": "东阿阿胶2022-2025年Q3营业总收入复合增长率达20%，远超行业均值，分析核心驱动力",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    },
+    {
+      "question_id": "B2059",
+      "question_text": "华润三九、白云山、云南白药、片仔癀2022-2025年Q3营业总收入+同比增长率+行业对比",
+      "response_text": "",
+      "has_table": false,
+      "has_chart": false,
+      "response_time_seconds": 0,
+      "notes": ""
+    }
+  ]
+}

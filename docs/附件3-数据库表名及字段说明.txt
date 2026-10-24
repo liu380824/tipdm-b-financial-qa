@@ -1,0 +1,99 @@
+
+=== 数据库表名 ===
+中文名称	英文名称
+业绩指标表	core_performance_indicators_sheet
+资产负债表	balance_sheet
+利润表	income_sheet
+现金流量表	cash_flow_sheet
+
+=== 核心业绩指标表 ===
+字段名称	中文名称	字段类型 	字段说明
+serial_number	序号	int	数据排序标识，用于区分不同记录
+stock_code	股票代码	varchar(20)	公司在证券市场的唯一标识代码
+stock_abbr	股票简称	varchar(50)	公司在证券市场的简称
+eps	每股收益(元)	decimal(10,4)	反映普通股股东每持有一股所能享有的企业净利润或需承担的企业净亏损
+total_operating_revenue	营业总收入(万元)	decimal(20,2)	公司报告期内日常经营活动实现的全部收入总额
+operating_revenue_yoy_growth	营业总收入-同比增长(%)	decimal(10,4)	本期营业总收入较上年同期的变动比例
+operating_revenue_qoq_growth	营业总收入-季度环比增长(%)	decimal(10,4)	本季度营业总收入较本年上一季度的变动比例
+net_profit_10k_yuan	净利润(万元)	decimal(20,2)	将净利润换算为万元单位的指标
+net_profit_yoy_growth	净利润-同比增长(%)	decimal(10,4)	本期净利润较上年同期的变动比例
+net_profit_qoq_growth	净利润-季度环比增长(%)	decimal(10,4)	本季度净利润较本年上一季度的变动比例
+net_asset_per_share	每股净资产(元)	decimal(10,4)	归属于上市公司股东的净资产除以总股本
+roe	净资产收益率(%)	decimal(10,4)	衡量公司运用净资产盈利的能力
+operating_cf_per_share	每股经营现金流量(元)	decimal(10,4)	经营活动产生的现金流量净额除以总股本
+net_profit_excl_non_recurring	扣非净利润（万元）	decimal(20,2)	剔除非经常性损益后的净利润
+net_profit_excl_non_recurring_yoy	扣非净利润同比增长（%）	decimal(10,4)	本期扣非净利润较上年同期的变动比例
+gross_profit_margin	销售毛利率(%)	decimal(10,4)	（营业总收入-营业成本）/营业总收入×100%
+net_profit_margin	销售净利率（%）	decimal(10,4)	（净利润/营业总收入）×100%
+roe_weighted_excl_non_recurring	加权平均净资产收益率（扣非）（%）	decimal(10,4)	依据扣非净利润计算的净资产收益率
+report_period	报告期	varchar(20)	数据对应的会计期间。其中，FY=年报（FullYear），Q1=一季度，HY=半年度，Q3=三季度。
+report_year	报告期-年份	INT	数据对应的年份。
+
+=== 资产负债表 ===
+字段名称	中文名称	字段类型	字段说明
+serial_number	序号	int	数据排序标识，用于区分不同记录
+stock_code	股票代码	varchar(20)	公司在证券市场的唯一标识代码
+stock_abbr	股票简称	varchar(50)	公司在证券市场的简称
+asset_cash_and_cash_equivalents	资产-货币资金(万元)	decimal(20,2)	公司持有的现金及可随时用于支付的存款
+asset_accounts_receivable	资产-应收账款(万元)	decimal(20,2)	公司因销售商品、提供劳务等应向购货单位或接受劳务单位收取的款项
+asset_inventory	资产-存货(万元)	decimal(20,2)	公司持有以备出售的产成品或商品、处在生产过程中的在产品、在生产过程或提供劳务过程中耗用的材料和物料等
+asset_trading_financial_assets	资产-交易性金融资产（万元）	decimal(20,2)	公司为近期内出售而持有的金融资产，主要为银行理财产品
+asset_construction_in_progress	资产-在建工程（万元）	decimal(20,2)	公司正在建设尚未达到预定可使用状态的固定资产
+asset_total_assets	资产-总资产(万元)	decimal(20,2)	公司报告期末全部资产的总额
+asset_total_assets_yoy_growth	资产-总资产同比(%)	decimal(10,4)	报告期末总资产较上年期末的变动比例
+liability_accounts_payable	负债-应付账款(万元)	decimal(20,2)	公司因购买材料、商品和接受劳务供应等经营活动应支付的款项
+liability_advance_from_customers	负债-预收账款(万元)	decimal(20,2)	公司按照合同规定向购货单位预收的款项，报告期内无余额，填列0
+liability_total_liabilities	负债-总负债(万元)	decimal(20,2)	公司报告期末全部负债的总额
+liability_total_liabilities_yoy_growth	负债-总负债同比(%)	decimal(10,4)	报告期末总负债较上年期末的变动比例
+liability_contract_liabilities	负债-合同负债（万元）	decimal(20,2)	公司已收或应收客户对价而应向客户转让商品的义务
+liability_short_term_loans	负债-短期借款（万元）	decimal(20,2)	公司向银行或其他金融机构等借入的期限在1年以下（含1年）的各种借款
+asset_liability_ratio	资产负债率(%)	decimal(10,4)	总负债/总资产×100%
+equity_unappropriated_profit	股东权益-未分配利润（万元）	decimal(20,2)	公司累计未分配的利润（或累计未弥补的亏损）
+equity_total_equity	股东权益合计(万元)	decimal(20,2)	公司报告期末所有者权益总额
+report_period	报告期	varchar(20)	数据对应的会计期间。其中，FY=年报（FullYear），Q1=一季度，HY=半年度，Q3=三季度。
+report_year	报告期-年份	INT	数据对应的年份。
+
+=== 现金流量表 ===
+字段名称	中文名称	字段类型	字段说明
+serial_number	序号	int	数据排序标识，用于区分不同记录
+stock_code	股票代码	varchar(20)	公司在证券市场的唯一标识代码
+stock_abbr	股票简称	varchar(50)	公司在证券市场的简称
+net_cash_flow	净现金流(元)	decimal(20,2)	即现金及现金等价物净增加额
+net_cash_flow_yoy_growth	净现金流-同比增长(%)	decimal(10,4)	本期净现金流较上年同期的变动比例
+operating_cf_net_amount	经营性现金流-现金流量净额(万元)	decimal(20,2)	公司日常经营活动产生的现金流入与流出的差额
+operating_cf_ratio_of_net_cf	经营性现金流-净现金流占比(%)	decimal(10,4)	经营性现金流净额占净现金流总额的比例
+operating_cf_cash_from_sales	经营性现金流-销售商品收到的现金（万元）	decimal(20,2)	公司通过销售商品、提供劳务实际收到的现金
+investing_cf_net_amount	投资性现金流-现金流量净额(万元)	decimal(20,2)	公司投资活动产生的现金流入与流出的差额
+investing_cf_ratio_of_net_cf	投资性现金流-净现金流占比(%)	decimal(10,4)	投资性现金流净额占净现金流总额的比例
+investing_cf_cash_for_investments	投资性现金流-投资支付的现金（万元）	decimal(20,2)	公司进行投资活动所支付的现金
+investing_cf_cash_from_investment_recovery	投资性现金流-收回投资收到的现金（万元）	decimal(20,2)	公司收回前期投资所收到的现金
+financing_cf_cash_from_borrowing	融资性现金流-取得借款收到的现金（万元）	decimal(20,2)	公司通过借款方式取得的现金
+financing_cf_cash_for_debt_repayment	融资性现金流-偿还债务支付的现金（万元）	decimal(20,2)	公司偿还前期借款所支付的现金
+financing_cf_net_amount	融资性现金流-现金流量净额(万元)	decimal(20,2)	公司融资活动产生的现金流入与流出的差额
+financing_cf_ratio_of_net_cf	融资性现金流-净现金流占比(%)	decimal(10,4)	融资性现金流净额占净现金流总额的比例
+report_period	报告期	varchar(20)	数据对应的会计期间。其中，FY=年报（FullYear），Q1=一季度，HY=半年度，Q3=三季度。
+report_year	报告期-年份	INT	数据对应的年份。
+
+=== 利润表 ===
+字段名称	中文名称	字段类型	字段说明
+serial_number	序号	int	数据排序标识，用于区分不同记录
+stock_code	股票代码	varchar(20)	公司在证券市场的唯一标识代码
+stock_abbr	股票简称	varchar(50)	公司在证券市场的简称
+net_profit	净利润(万元)	decimal(20,2)	公司报告期内实现的最终盈利或亏损总额
+net_profit_yoy_growth	净利润同比(%)	decimal(10,4)	本期净利润较上年同期的变动比例
+other_income	其他收益（万元）	decimal(20,2)	公司报告期内取得的与日常经营活动相关但不属于营业收入的政府补助等收益
+total_operating_revenue	营业总收入(万元)	decimal(20,2)	公司报告期内日常经营活动实现的全部收入总额
+operating_revenue_yoy_growth	营业总收入同比(%)	decimal(10,4)	本期营业总收入较上年同期的变动比例
+operating_expense_cost_of_sales	营业总支出-营业支出(万元)	decimal(20,2)	即营业成本，公司销售商品、提供劳务等日常经营活动发生的成本
+operating_expense_selling_expenses	营业总支出-销售费用(万元)	decimal(20,2)	公司为销售商品和材料、提供劳务过程中发生的各项费用
+operating_expense_administrative_expenses	营业总支出-管理费用(万元)	decimal(20,2)	公司为组织和管理企业生产经营所发生的费用
+operating_expense_financial_expenses	营业总支出-财务费用(万元)	decimal(20,2)	公司为筹集生产经营所需资金等而发生的筹资费用
+operating_expense_rnd_expenses	营业总支出-研发费用（万元）	decimal(20,2)	公司进行研究与开发无形资产过程中发生的各项费用
+operating_expense_taxes_and_surcharges	营业总支出-税金及附加（万元）	decimal(20,2)	公司经营活动应负担的相关税费
+total_operating_expenses	营业总支出(万元)	decimal(20,2)	公司报告期内发生的全部经营支出总额
+operating_profit	营业利润(万元)	decimal(20,2)	公司报告期内日常经营活动实现的利润（亏损）
+total_profit	利润总额(万元)	decimal(20,2)	公司报告期内实现的税前利润（亏损）总额
+asset_impairment_loss	资产减值损失（万元）	decimal(20,2)	公司计提各项资产减值准备所形成的损失
+credit_impairment_loss	信用减值损失（万元）	decimal(20,2)	公司计提各项金融工具信用减值准备所形成的损失
+report_period	报告期	varchar(20)	数据对应的会计期间。其中，FY=年报（FullYear），Q1=一季度，HY=半年度，Q3=三季度。
+report_year	报告期-年份	INT	数据对应的年份。

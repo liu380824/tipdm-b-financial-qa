@@ -1,0 +1,49 @@
+# 数据与环境产物
+
+*.db
+*.sqlite
+*.sqlite3
+knowledge_base*.db
+financial_reports*.db
+
+# 官方赛题数据（版权归组委会，需自行从官网获取）
+附件1*/**
+附件2*/**
+附件4*/**
+附件5*/**
+附件6*/**
+B题-示例数据/
+reports-上交所/
+reports-深交所/
+示例数据/
+
+# 密钥与本地配置
+config.json
+.env
+*.key
+
+# 依赖与构建产物
+.venv/
+venv/
+node_modules/
+dist/
+build/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# 日志与调试产物
+*.log
+_kb_debug.log
+
+# 体积过大的中间结果
+benchmark/llm_responses/_local_system.json
+
+# 编辑器与系统
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+desktop.ini

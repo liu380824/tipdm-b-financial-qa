@@ -1,0 +1,54 @@
+[
+  {
+    "model_name": "GLM-4-Flash",
+    "deploy_type": "API",
+    "avg_response_time": 26.38,
+    "avg_quality": 2.6,
+    "cost_per_100k_tokens": 0,
+    "cost_display": "免费",
+    "safety_score": 3.5,
+    "success_rate": 100.0,
+    "total_questions": 7,
+    "error_count": 0,
+    "composite_score": 7.3
+  },
+  {
+    "model_name": "DeepSeek-V3",
+    "deploy_type": "API",
+    "avg_response_time": 36.65,
+    "avg_quality": 3.6,
+    "cost_per_100k_tokens": 0.5,
+    "cost_display": "0.50",
+    "safety_score": 4.0,
+    "success_rate": 100.0,
+    "total_questions": 7,
+    "error_count": 0,
+    "composite_score": 7.3
+  },
+  {
+    "model_name": "Qwen2.5-72B-Instruct",
+    "deploy_type": "API",
+    "avg_response_time": 47.39,
+    "avg_quality": 4.1,
+    "cost_per_100k_tokens": 0.413,
+    "cost_display": "0.41",
+    "safety_score": 4.2,
+    "success_rate": 100.0,
+    "total_questions": 7,
+    "error_count": 0,
+    "composite_score": 7.5
+  },
+  {
+    "model_name": "GLM-5.1",
+    "deploy_type": "API",
+    "avg_response_time": 58.53,
+    "avg_quality": 4.5,
+    "cost_per_100k_tokens": 1.5,
+    "cost_display": "1.50",
+    "safety_score": 4.5,
+    "success_rate": 100.0,
+    "total_questions": 7,
+    "error_count": 0,
+    "composite_score": 6.2
+  }
+]

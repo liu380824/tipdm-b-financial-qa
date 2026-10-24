@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>消融实验报告 — Ablation Study</title>
+<style>
+:root {
+    --blue: #023047; --light-blue: #90C9E6; --yellow: #FFB703;
+    --orange: #FB8402; --teal: #219EBD; --gray: #D0D0D0; --dark: #404040;
+    --green: #10b981; --red: #ef4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft YaHei", "Segoe UI", sans-serif; background: #f0f4f8; color: var(--dark); line-height: 1.6; }
+.container { max-width: 1280px; margin: 0 auto; padding: 24px 16px; }
+h1 { background: linear-gradient(135deg, var(--blue), #035a7a); color: #fff; padding: 24px 32px; border-radius: 12px; font-size: 22px; margin-bottom: 20px; }
+h1 small { display: block; font-weight: 400; font-size: 13px; color: var(--light-blue); margin-top: 6px; }
+h3 { color: var(--blue); font-size: 15px; margin-bottom: 10px; }
+.card { background: #fff; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,.06); overflow: hidden; }
+.card-header { padding: 14px 22px; font-weight: 700; font-size: 16px; border-bottom: 2px solid var(--light-blue); color: var(--blue); }
+.card-body { padding: 18px 22px; }
+/* 表格 */
+.abl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.abl-table th { background: var(--blue); color: #fff; padding: 10px 8px; text-align: center; font-weight: 600; white-space: nowrap; }
+.abl-table td { padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; }
+.abl-table tr:hover { background: #f0f9ff; }
+.row-baseline { background: #ecfdf5 !important; }
+.row-baseline:hover { background: #d1fae5 !important; }
+.val-base { font-weight: 700; color: var(--green); }
+.val-down { color: var(--red); font-weight: 600; }
+/* 模式标签 */
+.mode-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 8px; font-weight: 600; }
+.mode-live { background: #dbeafe; color: #1e40af; }
+.mode-posthoc { background: #fef3c7; color: #92400e; }
+/* 柱状图 */
+.bar-chart-container { padding: 8px 0; }
+.bar-row { display: flex; align-items: center; margin-bottom: 8px; gap: 10px; }
+.bar-label { width: 130px; font-size: 13px; font-weight: 600; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; background: #e5e7eb; border-radius: 6px; height: 28px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 700; color: #fff; transition: width 0.5s; min-width: 40px; }
+.bar-full { background: var(--green); }
+.bar-partial { background: var(--yellow); color: var(--blue); }
+.bar-low { background: var(--orange); }
+.bar-lost { font-size: 12px; color: #888; min-width: 180px; }
+/* 热力图 */
+.heat-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.heat-table th { background: var(--blue); color: #fff; padding: 8px 6px; text-align: center; font-size: 11px; }
+.heat-table td { padding: 6px; border: 1px solid #e5e7eb; font-size: 13px; }
+/* 特征重要度 */
+.importance-chart { padding: 8px 0; }
+.imp-row { display: flex; align-items: center; margin-bottom: 8px; gap: 10px; }
+.imp-label { width: 160px; font-size: 14px; font-weight: 600; text-align: right; flex-shrink: 0; }
+.imp-track { flex: 1; background: #e5e7eb; border-radius: 6px; height: 32px; overflow: hidden; }
+.imp-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; font-weight: 700; color: #fff; min-width: 50px; }
+.imp-high { background: linear-gradient(90deg, var(--red), #f97316); }
+.imp-mid { background: linear-gradient(90deg, var(--orange), var(--yellow)); color: var(--blue); }
+.imp-low { background: linear-gradient(90deg, var(--teal), var(--light-blue)); }
+/* 实验设计说明 */
+.design-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.design-item { background: #f8fafc; border-radius: 8px; padding: 12px 16px; border-left: 4px solid var(--teal); }
+.design-item b { color: var(--blue); }
+.design-item .tag { display: inline-block; background: var(--blue); color: #fff; font-size: 11px; padding: 1px 8px; border-radius: 8px; margin-right: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>消融实验报告（Ablation Study）
+    <small>生成时间: 2026-04-21 23:03:18 | 问题: 1 | 条件: 8 | 共 8 次实验</small>
+</h1>
+
+<!-- 实验设计 -->
+<div class="card">
+    <div class="card-header">实验设计</div>
+    <div class="card-body">
+        <p style="margin-bottom:12px;font-size:14px;">
+            对增强层的 <b>7 大组件</b>逐一禁用，与 Baseline（全量开启）对比，量化每个组件对最终回答质量的贡献。
+        </p>
+        <div class="design-grid">
+            <div class="design-item"><span class="tag">full</span><b>全量 Baseline</b></div><div class="design-item"><span class="tag">-chart</span><b>禁用自动图表</b></div><div class="design-item"><span class="tag">-llm</span><b>禁用 LLM 分析</b></div><div class="design-item"><span class="tag">-provenance</span><b>禁用数据溯源</b></div><div class="design-item"><span class="tag">-thinking_map</span><b>禁用思维导图</b></div><div class="design-item"><span class="tag">-calc_traces</span><b>禁用计算溯源链</b></div><div class="design-item"><span class="tag">-deep_think</span><b>禁用深度思考</b></div><div class="design-item"><span class="tag">-kb</span><b>禁用知识库检索</b></div>
+        </div>
+    </div>
+</div>
+
+<!-- 特征重要度 -->
+<div class="card">
+    <div class="card-header">组件重要度排名（Feature Importance）</div>
+    <div class="card-body">
+        <p style="margin-bottom:12px;font-size:13px;color:#666;">
+            数值 = 禁用该组件后，各指标平均损失百分比。越高表示该组件越关键。
+        </p>
+        <div class="importance-chart"><div class="imp-row">
+                <div class="imp-label">禁用 LLM 分析 <small style="color:#888;">[live]</small></div>
+                <div class="imp-track">
+                    <div class="imp-fill imp-high" style="width:49.4%">损失 24.7 分</div>
+                </div>
+            </div>
+<div class="imp-row">
+                <div class="imp-label">禁用数据溯源 <small style="color:#888;">[live]</small></div>
+                <div class="imp-track">
+                    <div class="imp-fill imp-high" style="width:46.6%">损失 23.3 分</div>
+                </div>
+            </div>
+<div class="imp-row">
+                <div class="imp-label">禁用深度思考 <small style="color:#888;">[live]</small></div>
+                <div class="imp-track">
+                    <div class="imp-fill imp-high" style="width:44.4%">损失 22.2 分</div>
+                </div>
+            </div>
+<div class="imp-row">
+                <div class="imp-label">禁用知识库检索 <small style="color:#888;">[live]</small></div>
+                <div class="imp-track">
+                    <div class="imp-fill imp-mid" style="width:37.4%">损失 18.7 分</div>
+                </div>
+            </div>
+<div class="imp-row">
+                <div class="imp-label">禁用自动图表 <small style="color:#888;">[live]</small></div>
+                <div class="imp-track">
+                    <div class="imp-fill imp-mid" style="width:24.0%">损失 12.0 分</div>
+                </div>
+            </div>
+<div class="imp-row">
+                <div class="imp-label">禁用计算溯源链 <small style="color:#888;">[live]</small></div>
+                <div class="imp-track">
+                    <div class="imp-fill imp-mid" style="width:22.4%">损失 11.2 分</div>
+                </div>
+            </div>
+<div class="imp-row">
+                <div class="imp-label">禁用思维导图 <small style="color:#888;">[live]</small></div>
+                <div class="imp-track">
+                    <div class="imp-fill imp-mid" style="width:16.0%">损失 8.0 分</div>
+                </div>
+            </div>
+</div>
+    </div>
+</div>
+
+<!-- 各问题详细结果 -->
+
+        <div class="card">
+            <div class="card-header">问题 1: 2025年第三季度营业总收入排名前五的中药公司有哪些？</div>
+            <div class="card-body">
+                <h3>对比表</h3>
+                <table class="abl-table"><thead><tr><th>条件</th><th>模式</th><th>内容长度</th><th>图表</th><th>溯源</th><th>计算链</th><th>归因</th><th>思维导图</th><th>洞察</th><th>建议</th><th>知识库</th><th>思考</th><th>耗时(s)</th><th>质量评分</th></tr></thead><tbody><tr class="row-baseline"><td><b>全量 Baseline</b></td><td><span class="mode-badge mode-live">live</span></td><td class="val-base">635</td><td class="val-base">1</td><td class="val-base">886</td><td class="val-base">570</td><td class="val-base">4</td><td class="val-base">1</td><td class="val-base">0</td><td class="val-base">2</td><td class="val-base">10</td><td class="val-base">6</td><td>48.7</td><td class="val-base" style="font-weight:700;font-size:15px;">100.0</td></tr><tr class=""><td><b>禁用自动图表</b></td><td><span class="mode-badge mode-live">live</span></td><td>691</td><td class="val-down">0 ↓</td><td>886</td><td>570</td><td>4</td><td>1</td><td>0</td><td>2</td><td>21</td><td>6</td><td>47.6</td><td class="val-down" style="font-weight:700;font-size:15px;">88.0</td></tr><tr class=""><td><b>禁用 LLM 分析</b></td><td><span class="mode-badge mode-live">live</span></td><td class="val-down">11 ↓</td><td>1</td><td>886</td><td>570</td><td>4</td><td>1</td><td>0</td><td class="val-down">0 ↓</td><td>19</td><td>6</td><td>31.5</td><td class="val-down" style="font-weight:700;font-size:15px;">75.3</td></tr><tr class=""><td><b>禁用数据溯源</b></td><td><span class="mode-badge mode-live">live</span></td><td class="val-down">594 ↓</td><td>1</td><td class="val-down">0 ↓</td><td class="val-down">0 ↓</td><td>4</td><td>1</td><td>0</td><td>2</td><td>11</td><td>6</td><td>47.9</td><td class="val-down" style="font-weight:700;font-size:15px;">76.7</td></tr><tr class=""><td><b>禁用思维导图</b></td><td><span class="mode-badge mode-live">live</span></td><td class="val-down">634 ↓</td><td>1</td><td>886</td><td>570</td><td>4</td><td class="val-down">0 ↓</td><td>0</td><td>2</td><td>22</td><td>6</td><td>61.7</td><td class="" style="font-weight:700;font-size:15px;">92.0</td></tr><tr class=""><td><b>禁用计算溯源链</b></td><td><span class="mode-badge mode-live">live</span></td><td class="val-down">596 ↓</td><td>1</td><td>886</td><td class="val-down">0 ↓</td><td>4</td><td>1</td><td>0</td><td>2</td><td>21</td><td>6</td><td>63.3</td><td class="val-down" style="font-weight:700;font-size:15px;">88.8</td></tr><tr class=""><td><b>禁用深度思考</b></td><td><span class="mode-badge mode-live">live</span></td><td class="val-down">185 ↓</td><td>1</td><td>886</td><td>570</td><td>4</td><td>1</td><td>0</td><td>2</td><td>10</td><td class="val-down">0 ↓</td><td>40.8</td><td class="val-down" style="font-weight:700;font-size:15px;">77.8</td></tr><tr class=""><td><b>禁用知识库检索</b></td><td><span class="mode-badge mode-live">live</span></td><td class="val-down">464 ↓</td><td>1</td><td>886</td><td>570</td><td>4</td><td>1</td><td>0</td><td>2</td><td class="val-down">0 ↓</td><td class="val-down">5 ↓</td><td>27.1</td><td class="val-down" style="font-weight:700;font-size:15px;">81.3</td></tr></tbody></table>
+                <h3 style="margin-top:20px;">质量评分排名（Quality Score Ranking）</h3>
+                <div class="bar-chart-container"><div class="bar-row">
+                <div class="bar-label">禁用 LLM 分析 <small>[live]</small></div>
+                <div class="bar-track">
+                    <div class="bar-fill bar-partial" style="width:75.3%">75.3分 (损失24.7)</div>
+                </div>
+                <div class="bar-lost">内容长度 (11/635), 建议 (0/2)</div>
+            </div>
+<div class="bar-row">
+                <div class="bar-label">禁用数据溯源 <small>[live]</small></div>
+                <div class="bar-track">
+                    <div class="bar-fill bar-partial" style="width:76.7%">76.7分 (损失23.3)</div>
+                </div>
+                <div class="bar-lost">内容长度 (594/635), 溯源 (0/886), 计算链 (0/570)</div>
+            </div>
+<div class="bar-row">
+                <div class="bar-label">禁用深度思考 <small>[live]</small></div>
+                <div class="bar-track">
+                    <div class="bar-fill bar-partial" style="width:77.8%">77.8分 (损失22.2)</div>
+                </div>
+                <div class="bar-lost">内容长度 (185/635), 思考 (0/6)</div>
+            </div>
+<div class="bar-row">
+                <div class="bar-label">禁用知识库检索 <small>[live]</small></div>
+                <div class="bar-track">
+                    <div class="bar-fill bar-partial" style="width:81.3%">81.3分 (损失18.7)</div>
+                </div>
+                <div class="bar-lost">内容长度 (464/635), 知识库 (0/10), 思考 (5/6)</div>
+            </div>
+<div class="bar-row">
+                <div class="bar-label">禁用自动图表 <small>[live]</small></div>
+                <div class="bar-track">
+                    <div class="bar-fill bar-full" style="width:88.0%">88.0分 (损失12.0)</div>
+                </div>
+                <div class="bar-lost">图表</div>
+            </div>
+<div class="bar-row">
+                <div class="bar-label">禁用计算溯源链 <small>[live]</small></div>
+                <div class="bar-track">
+                    <div class="bar-fill bar-full" style="width:88.8%">88.8分 (损失11.2)</div>
+                </div>
+                <div class="bar-lost">内容长度 (596/635), 计算链 (0/570)</div>
+            </div>
+<div class="bar-row">
+                <div class="bar-label">禁用思维导图 <small>[live]</small></div>
+                <div class="bar-track">
+                    <div class="bar-fill bar-full" style="width:92.0%">92.0分 (损失8.0)</div>
+                </div>
+                <div class="bar-lost">内容长度 (634/635), 思维导图</div>
+            </div>
+</div>
+                <h3 style="margin-top:20px;">热力图（Heatmap）</h3>
+                <div class="heatmap"><table class="heat-table"><thead><tr><th></th><th>内容长度</th><th>图表</th><th>溯源</th><th>计算链</th><th>归因</th><th>思维导图</th><th>洞察</th><th>建议</th><th>知识库</th><th>思考</th></tr></thead><tbody><tr><td><b>全量 Baseline</b></td><td style="background:#d1fae5;text-align:center;font-weight:600;">635</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">886</td><td style="background:#d1fae5;text-align:center;font-weight:600;">570</td><td style="background:#d1fae5;text-align:center;font-weight:600;">4</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">2</td><td style="background:#d1fae5;text-align:center;font-weight:600;">10</td><td style="background:#d1fae5;text-align:center;font-weight:600;">6</td></tr><tr><td><b>禁用自动图表</b></td><td style="background:#d1fae5;text-align:center;font-weight:600;">691</td><td style="background:#fecaca;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">886</td><td style="background:#d1fae5;text-align:center;font-weight:600;">570</td><td style="background:#d1fae5;text-align:center;font-weight:600;">4</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">2</td><td style="background:#d1fae5;text-align:center;font-weight:600;">21</td><td style="background:#d1fae5;text-align:center;font-weight:600;">6</td></tr><tr><td><b>禁用 LLM 分析</b></td><td style="background:#fed7aa;text-align:center;font-weight:600;">11</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">886</td><td style="background:#d1fae5;text-align:center;font-weight:600;">570</td><td style="background:#d1fae5;text-align:center;font-weight:600;">4</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">0</td><td style="background:#fecaca;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">19</td><td style="background:#d1fae5;text-align:center;font-weight:600;">6</td></tr><tr><td><b>禁用数据溯源</b></td><td style="background:#fef3c7;text-align:center;font-weight:600;">594</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#fecaca;text-align:center;font-weight:600;">0</td><td style="background:#fecaca;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">4</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">2</td><td style="background:#d1fae5;text-align:center;font-weight:600;">11</td><td style="background:#d1fae5;text-align:center;font-weight:600;">6</td></tr><tr><td><b>禁用思维导图</b></td><td style="background:#fef3c7;text-align:center;font-weight:600;">634</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">886</td><td style="background:#d1fae5;text-align:center;font-weight:600;">570</td><td style="background:#d1fae5;text-align:center;font-weight:600;">4</td><td style="background:#fecaca;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">2</td><td style="background:#d1fae5;text-align:center;font-weight:600;">22</td><td style="background:#d1fae5;text-align:center;font-weight:600;">6</td></tr><tr><td><b>禁用计算溯源链</b></td><td style="background:#fef3c7;text-align:center;font-weight:600;">596</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">886</td><td style="background:#fecaca;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">4</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">2</td><td style="background:#d1fae5;text-align:center;font-weight:600;">21</td><td style="background:#d1fae5;text-align:center;font-weight:600;">6</td></tr><tr><td><b>禁用深度思考</b></td><td style="background:#fed7aa;text-align:center;font-weight:600;">185</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">886</td><td style="background:#d1fae5;text-align:center;font-weight:600;">570</td><td style="background:#d1fae5;text-align:center;font-weight:600;">4</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">2</td><td style="background:#d1fae5;text-align:center;font-weight:600;">10</td><td style="background:#fecaca;text-align:center;font-weight:600;">0</td></tr><tr><td><b>禁用知识库检索</b></td><td style="background:#fef3c7;text-align:center;font-weight:600;">464</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">886</td><td style="background:#d1fae5;text-align:center;font-weight:600;">570</td><td style="background:#d1fae5;text-align:center;font-weight:600;">4</td><td style="background:#d1fae5;text-align:center;font-weight:600;">1</td><td style="background:#d1fae5;text-align:center;font-weight:600;">0</td><td style="background:#d1fae5;text-align:center;font-weight:600;">2</td><td style="background:#fecaca;text-align:center;font-weight:600;">0</td><td style="background:#fef3c7;text-align:center;font-weight:600;">5</td></tr></tbody></table></div>
+            </div>
+        </div>
+        
+
+</div>
+</body>
+</html>

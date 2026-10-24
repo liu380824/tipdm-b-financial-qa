@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基准对比报告 — Benchmark Report</title>
+<style>
+:root {
+    --blue: #023047; --light-blue: #90C9E6; --yellow: #FFB703;
+    --orange: #FB8402; --teal: #219EBD; --gray: #D0D0D0; --dark: #404040;
+    --green: #10b981; --red: #ef4444;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft YaHei", "Segoe UI", sans-serif; background: #f0f4f8; color: var(--dark); line-height: 1.6; }
+.container { max-width: 1400px; margin: 0 auto; padding: 24px 16px; }
+h1 { color: var(--blue); font-size: 26px; margin-bottom: 6px; }
+h1 small { display: block; font-weight: 400; font-size: 13px; color: var(--light-blue); margin-top: 4px; }
+h2 { color: var(--blue); font-size: 18px; margin: 24px 0 12px; }
+.card { background: #fff; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,.06); overflow: hidden; }
+.card-header { padding: 14px 22px; font-weight: 700; font-size: 15px; border-bottom: 2px solid var(--light-blue); color: var(--blue); }
+.card-body { padding: 18px 22px; overflow-x: auto; }
+.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 8px; font-weight: 600; background: #dbeafe; color: #1e40af; margin-left: 8px; }
+.tag-diff { background: #fef3c7; color: #92400e; }
+/* 表格 */
+.cmp-table, .q-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.cmp-table th, .q-table th { background: var(--blue); color: #fff; padding: 10px 8px; text-align: center; font-weight: 600; white-space: nowrap; }
+.cmp-table td, .q-table td { padding: 8px; text-align: center; border-bottom: 1px solid #e5e7eb; }
+.cmp-table tr:hover, .q-table tr:hover { background: #f0f9ff; }
+.row-best { background: #ecfdf5 !important; }
+.preview { text-align: left; font-size: 12px; color: #666; max-width: 300px; }
+/* 雷达图区域 */
+.radar-container { display: flex; justify-content: center; padding: 20px; }
+/* 优势卡片 */
+.adv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.adv-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.06); border-left: 4px solid var(--green); }
+.adv-card h4 { color: var(--blue); margin-bottom: 8px; }
+.adv-card .score { font-size: 28px; font-weight: 800; color: var(--green); }
+.adv-card .vs { font-size: 14px; color: #888; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>基准对比报告
+        <small>Benchmark Report — 2026-04-21 21:01 | 9 个问题 | 4 个系统</small>
+    </h1>
+
+    <h2>一、综合评分对比</h2>
+    <div class="card"><div class="card-body"><table class="cmp-table"><thead><tr><th>系统</th><th>数据准确性<br><small>(30分)</small></th><th>数据溯源<br><small>(15分)</small></th><th>计算可解释性<br><small>(10分)</small></th><th>可视化能力<br><small>(10分)</small></th><th>分析深度<br><small>(15分)</small></th><th>响应完整性<br><small>(10分)</small></th><th>抗幻觉能力<br><small>(10分)</small></th><th>总分<br><small>(100)</small></th></tr></thead><tbody><tr class="row-best"><td><b>本系统（智能问数助手）</b></td><td style="color:#10b981;font-weight:700;">28.7</td><td style="color:#f59e0b;font-weight:700;">11.3</td><td style="color:#10b981;font-weight:700;">8.9</td><td style="color:#10b981;font-weight:700;">8.2</td><td style="color:#10b981;font-weight:700;">12.1</td><td style="color:#10b981;font-weight:700;">8.6</td><td style="color:#10b981;font-weight:700;">9.6</td><td style="font-size:18px;font-weight:800;">87.4</td></tr><tr class=""><td><b>DeepSeek</b></td><td style="color:#10b981;font-weight:700;">27.4</td><td style="color:#f59e0b;font-weight:700;">8.7</td><td style="color:#f59e0b;font-weight:700;">7.7</td><td style="color:#f59e0b;font-weight:700;">5.6</td><td style="color:#f59e0b;font-weight:700;">11.0</td><td style="color:#f59e0b;font-weight:700;">7.8</td><td style="color:#10b981;font-weight:700;">9.9</td><td style="font-size:18px;font-weight:800;">78.1</td></tr><tr class=""><td><b>豆包</b></td><td style="color:#10b981;font-weight:700;">25.6</td><td style="color:#ef4444;font-weight:700;">7.4</td><td style="color:#f59e0b;font-weight:700;">7.6</td><td style="color:#f59e0b;font-weight:700;">7.2</td><td style="color:#10b981;font-weight:700;">12.6</td><td style="color:#10b981;font-weight:700;">8.2</td><td style="color:#10b981;font-weight:700;">9.0</td><td style="font-size:18px;font-weight:800;">77.6</td></tr><tr class=""><td><b>秘塔AI</b></td><td style="color:#10b981;font-weight:700;">27.3</td><td style="color:#f59e0b;font-weight:700;">10.9</td><td style="color:#f59e0b;font-weight:700;">7.7</td><td style="color:#10b981;font-weight:700;">8.4</td><td style="color:#10b981;font-weight:700;">13.9</td><td style="color:#10b981;font-weight:700;">8.6</td><td style="color:#10b981;font-weight:700;">10.0</td><td style="font-size:18px;font-weight:800;">86.8</td></tr></tbody></table></div></div>
+
+    <h2>二、能力雷达图</h2>
+    <div class="card"><div class="card-body"><div class="radar-container"><svg width="450" height="430" viewBox="0 0 450 430"><rect width="450" height="430" fill="#fafbfc" rx="10"/><polygon points="200.0,168.0 225.0,180.0 231.2,207.1 213.9,228.8 186.1,228.8 168.8,207.1 175.0,180.0" fill="none" stroke="#ddd" stroke-width="1"/><polygon points="200.0,136.0 250.0,160.1 262.4,214.2 227.8,257.7 172.2,257.7 137.6,214.2 150.0,160.1" fill="none" stroke="#ddd" stroke-width="1"/><polygon points="200.0,104.0 275.1,140.1 293.6,221.4 241.7,286.5 158.3,286.5 106.4,221.4 124.9,140.1" fill="none" stroke="#ddd" stroke-width="1"/><polygon points="200.0,72.0 300.1,120.2 324.8,228.5 255.5,315.3 144.5,315.3 75.2,228.5 99.9,120.2" fill="none" stroke="#ddd" stroke-width="1"/><polygon points="200.0,40.0 325.1,100.2 356.0,235.6 269.4,344.2 130.6,344.2 44.0,235.6 74.9,100.2" fill="none" stroke="#ddd" stroke-width="1"/><line x1="200" y1="200" x2="200.0" y2="40.0" stroke="#ddd" stroke-width="1"/><text x="200.0" y="10.0" text-anchor="middle" font-size="12" fill="#333" font-family="Microsoft YaHei">数据准确</text><line x1="200" y1="200" x2="325.1" y2="100.2" stroke="#ddd" stroke-width="1"/><text x="348.5" y="81.5" text-anchor="start" font-size="12" fill="#333" font-family="Microsoft YaHei">数据溯源</text><line x1="200" y1="200" x2="356.0" y2="235.6" stroke="#ddd" stroke-width="1"/><text x="385.2" y="242.3" text-anchor="start" font-size="12" fill="#333" font-family="Microsoft YaHei">计算可解</text><line x1="200" y1="200" x2="269.4" y2="344.2" stroke="#ddd" stroke-width="1"/><text x="282.4" y="371.2" text-anchor="start" font-size="12" fill="#333" font-family="Microsoft YaHei">可视化能</text><line x1="200" y1="200" x2="130.6" y2="344.2" stroke="#ddd" stroke-width="1"/><text x="117.6" y="371.2" text-anchor="end" font-size="12" fill="#333" font-family="Microsoft YaHei">分析深度</text><line x1="200" y1="200" x2="44.0" y2="235.6" stroke="#ddd" stroke-width="1"/><text x="14.8" y="242.3" text-anchor="end" font-size="12" fill="#333" font-family="Microsoft YaHei">响应完整</text><line x1="200" y1="200" x2="74.9" y2="100.2" stroke="#ddd" stroke-width="1"/><text x="51.5" y="81.5" text-anchor="end" font-size="12" fill="#333" font-family="Microsoft YaHei">抗幻觉能</text><polygon points="200.0,46.9 294.2,124.8 338.8,231.7 256.9,318.2 144.0,316.3 65.8,230.6 79.9,104.2" fill="#1a1a1a" fill-opacity="0.15" stroke="#1a1a1a" stroke-width="2.5"/><circle cx="200.0" cy="46.9" r="3.5" fill="#1a1a1a"/><circle cx="294.2" cy="124.8" r="3.5" fill="#1a1a1a"/><circle cx="338.8" cy="231.7" r="3.5" fill="#1a1a1a"/><circle cx="256.9" cy="318.2" r="3.5" fill="#1a1a1a"/><circle cx="144.0" cy="316.3" r="3.5" fill="#1a1a1a"/><circle cx="65.8" cy="230.6" r="3.5" fill="#1a1a1a"/><circle cx="79.9" cy="104.2" r="3.5" fill="#1a1a1a"/><polygon points="200.0,53.9 272.6,142.1 320.1,227.4 238.9,280.7 149.1,305.7 78.3,227.8 76.2,101.2" fill="#2563eb" fill-opacity="0.15" stroke="#2563eb" stroke-width="2.5"/><circle cx="200.0" cy="53.9" r="3.5" fill="#2563eb"/><circle cx="272.6" cy="142.1" r="3.5" fill="#2563eb"/><circle cx="320.1" cy="227.4" r="3.5" fill="#2563eb"/><circle cx="238.9" cy="280.7" r="3.5" fill="#2563eb"/><circle cx="149.1" cy="305.7" r="3.5" fill="#2563eb"/><circle cx="78.3" cy="227.8" r="3.5" fill="#2563eb"/><circle cx="76.2" cy="101.2" r="3.5" fill="#2563eb"/><polygon points="200.0,63.5 261.7,150.8 318.6,227.1 250.0,303.8 141.7,321.1 72.1,229.2 87.4,110.2" fill="#eab308" fill-opacity="0.15" stroke="#eab308" stroke-width="2.5"/><circle cx="200.0" cy="63.5" r="3.5" fill="#eab308"/><circle cx="261.7" cy="150.8" r="3.5" fill="#eab308"/><circle cx="318.6" cy="227.1" r="3.5" fill="#eab308"/><circle cx="250.0" cy="303.8" r="3.5" fill="#eab308"/><circle cx="141.7" cy="321.1" r="3.5" fill="#eab308"/><circle cx="72.1" cy="229.2" r="3.5" fill="#eab308"/><circle cx="87.4" cy="110.2" r="3.5" fill="#eab308"/><polygon points="200.0,54.4 290.9,127.5 320.1,227.4 258.3,321.1 135.7,333.6 65.8,230.6 74.9,100.2" fill="#16a34a" fill-opacity="0.15" stroke="#16a34a" stroke-width="2.5"/><circle cx="200.0" cy="54.4" r="3.5" fill="#16a34a"/><circle cx="290.9" cy="127.5" r="3.5" fill="#16a34a"/><circle cx="320.1" cy="227.4" r="3.5" fill="#16a34a"/><circle cx="258.3" cy="321.1" r="3.5" fill="#16a34a"/><circle cx="135.7" cy="333.6" r="3.5" fill="#16a34a"/><circle cx="65.8" cy="230.6" r="3.5" fill="#16a34a"/><circle cx="74.9" cy="100.2" r="3.5" fill="#16a34a"/><rect x="20" y="410" width="12" height="12" fill="#1a1a1a" rx="2"/><text x="36" y="420" font-size="11" fill="#333" font-family="Microsoft YaHei">本系统（智能问数助手）</text><rect x="150" y="410" width="12" height="12" fill="#2563eb" rx="2"/><text x="166" y="420" font-size="11" fill="#333" font-family="Microsoft YaHei">DeepSeek</text><rect x="280" y="410" width="12" height="12" fill="#eab308" rx="2"/><text x="296" y="420" font-size="11" fill="#333" font-family="Microsoft YaHei">豆包</text><rect x="410" y="410" width="12" height="12" fill="#16a34a" rx="2"/><text x="426" y="420" font-size="11" fill="#333" font-family="Microsoft YaHei">秘塔AI</text></svg></div></div></div>
+
+    <h2>三、评分标准体系</h2>
+    <div class="card"><div class="card-body"><table class="summary-table" style="font-size:13px;">
+<thead><tr>
+  <th style="width:110px;">评估维度</th>
+  <th style="width:55px;text-align:center;">满分</th>
+  <th style="width:40px;text-align:center;">权重</th>
+  <th>评分子项</th>
+  <th style="width:60px;text-align:center;">分值</th>
+</tr></thead><tbody><tr><td rowspan="4" style="font-weight:700;color:#023047;vertical-align:middle;">数据准确性</td><td rowspan="4" style="text-align:center;font-weight:700;font-size:15px;vertical-align:middle;">30</td><td rowspan="4" style="text-align:center;color:#64748b;vertical-align:middle;">30%</td><td>① 查询成功并返回目标数据</td><td style="text-align:center;font-weight:600;">10</td></tr><tr><td>② 回答与问题意图匹配</td><td style="text-align:center;font-weight:600;">8</td></tr><tr><td>③ 覆盖问题中的核心实体</td><td style="text-align:center;font-weight:600;">6</td></tr><tr><td>④ 包含实质性数值（非空洞文字）</td><td style="text-align:center;font-weight:600;">6</td></tr><tr><td rowspan="4" style="font-weight:700;color:#2a9d8f;vertical-align:middle;">数据溯源</td><td rowspan="4" style="text-align:center;font-weight:700;font-size:15px;vertical-align:middle;">15</td><td rowspan="4" style="text-align:center;color:#64748b;vertical-align:middle;">15%</td><td>① 数据来源可追溯（引用机制）</td><td style="text-align:center;font-weight:600;">6</td></tr><tr><td>② 字段/文本级归因精度</td><td style="text-align:center;font-weight:600;">3</td></tr><tr><td>③ 来源标注完整性</td><td style="text-align:center;font-weight:600;">2</td></tr><tr><td>④ 深度溯源（多源交叉验证）</td><td style="text-align:center;font-weight:600;">4</td></tr><tr><td rowspan="3" style="font-weight:700;color:#e63946;vertical-align:middle;">计算可解释</td><td rowspan="3" style="text-align:center;font-weight:700;font-size:15px;vertical-align:middle;">10</td><td rowspan="3" style="text-align:center;color:#64748b;vertical-align:middle;">10%</td><td>① 计算过程可追踪</td><td style="text-align:center;font-weight:600;">4</td></tr><tr><td>② 公式/推导步骤展示</td><td style="text-align:center;font-weight:600;">3</td></tr><tr><td>③ 计算结果可验证</td><td style="text-align:center;font-weight:600;">3</td></tr><tr><td rowspan="4" style="font-weight:700;color:#7c3aed;vertical-align:middle;">可视化能力</td><td rowspan="4" style="text-align:center;font-weight:700;font-size:15px;vertical-align:middle;">10</td><td rowspan="4" style="text-align:center;color:#64748b;vertical-align:middle;">10%</td><td>① 图表生成与展示</td><td style="text-align:center;font-weight:600;">4</td></tr><tr><td>② 图表类型与问题匹配</td><td style="text-align:center;font-weight:600;">2</td></tr><tr><td>③ 数据表格+图表双重展示</td><td style="text-align:center;font-weight:600;">2</td></tr><tr><td>④ 平台可视化能力</td><td style="text-align:center;font-weight:600;">2</td></tr><tr><td rowspan="4" style="font-weight:700;color:#f59e0b;vertical-align:middle;">分析深度</td><td rowspan="4" style="text-align:center;font-weight:700;font-size:15px;vertical-align:middle;">15</td><td rowspan="4" style="text-align:center;color:#64748b;vertical-align:middle;">15%</td><td>① 文本分析质量（长度+关键词密度）</td><td style="text-align:center;font-weight:600;">5</td></tr><tr><td>② 数据洞察与归因分析</td><td style="text-align:center;font-weight:600;">4</td></tr><tr><td>③ 多维度覆盖（趋势/对比/原因/建议）</td><td style="text-align:center;font-weight:600;">4</td></tr><tr><td>④ 结构化表达（分段/列表/总结）</td><td style="text-align:center;font-weight:600;">2</td></tr><tr><td rowspan="4" style="font-weight:700;color:#0ea5e9;vertical-align:middle;">响应完整性</td><td rowspan="4" style="text-align:center;font-weight:700;font-size:15px;vertical-align:middle;">10</td><td rowspan="4" style="text-align:center;color:#64748b;vertical-align:middle;">10%</td><td>① 核心实体覆盖</td><td style="text-align:center;font-weight:600;">3</td></tr><tr><td>② 问题要素全面回应</td><td style="text-align:center;font-weight:600;">3</td></tr><tr><td>③ 回答结构丰富度</td><td style="text-align:center;font-weight:600;">2</td></tr><tr><td>④ 后续建议与扩展分析</td><td style="text-align:center;font-weight:600;">2</td></tr><tr><td rowspan="3" style="font-weight:700;color:#64748b;vertical-align:middle;">抗幻觉能力</td><td rowspan="3" style="text-align:center;font-weight:700;font-size:15px;vertical-align:middle;">10</td><td rowspan="3" style="text-align:center;color:#64748b;vertical-align:middle;">10%</td><td>① 数值与标准答案一致</td><td style="text-align:center;font-weight:600;">4</td></tr><tr><td>② 无自相矛盾表述</td><td style="text-align:center;font-weight:600;">3</td></tr><tr><td>③ 对不确定内容恰当表达</td><td style="text-align:center;font-weight:600;">3</td></tr><tr style="background:#f1f5f9;font-weight:700;">
+  <td>合计</td>
+  <td style="text-align:center;font-size:16px;">100</td>
+  <td style="text-align:center;">100%</td>
+  <td colspan="2" style="color:#64748b;font-weight:normal;font-size:12px;">
+    所有系统采用相同评分标准。本系统通过结构化字段（SQL/行数/图表对象）自动评测；<br>
+    外部LLM通过文本分析+平台能力元数据评测。评分标准一致，检测手段因数据形式而异。
+  </td>
+</tr></tbody></table></div></div>
+
+    <h2>四、核心优势分析</h2>
+    <div class="adv-grid"><div class="adv-card">
+            <h4>🟢 数据准确性</h4>
+            <div class="score">28.7/30</div>
+            <div class="vs">vs 竞品平均 26.8/30
+                （领先 +1.9）
+            </div>
+        </div><div class="adv-card">
+            <h4>🟢 数据溯源</h4>
+            <div class="score">11.3/15</div>
+            <div class="vs">vs 竞品平均 9.0/15
+                （领先 +2.3）
+            </div>
+        </div><div class="adv-card">
+            <h4>🟢 计算可解释性</h4>
+            <div class="score">8.9/10</div>
+            <div class="vs">vs 竞品平均 7.7/10
+                （领先 +1.2）
+            </div>
+        </div><div class="adv-card">
+            <h4>🟢 可视化能力</h4>
+            <div class="score">8.2/10</div>
+            <div class="vs">vs 竞品平均 7.1/10
+                （领先 +1.1）
+            </div>
+        </div><div class="adv-card">
+            <h4>🔴 分析深度</h4>
+            <div class="score">12.1/15</div>
+            <div class="vs">vs 竞品平均 12.5/15
+                
+            </div>
+        </div><div class="adv-card">
+            <h4>🟢 响应完整性</h4>
+            <div class="score">8.6/10</div>
+            <div class="vs">vs 竞品平均 8.2/10
+                （领先 +0.4）
+            </div>
+        </div><div class="adv-card">
+            <h4>🔴 抗幻觉能力</h4>
+            <div class="score">9.6/10</div>
+            <div class="vs">vs 竞品平均 9.6/10
+                
+            </div>
+        </div></div>
+
+    <h2>五、逐题详细评分</h2>
+    <div class="card">
+            <div class="card-header">B1030: 从资产负债表中提取片仔癀（600436）2022年全年的资产总额、负债总额、股东权益总额（单位：万元）
+                <span class="tag">事实查询</span>
+                <span class="tag tag-diff">easy</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.3);font-weight:600;">30.0</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">10.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.255);font-weight:600;">8.5</td><td style="background:rgba(239,68,68,0.09399999999999997);font-weight:600;">10.3</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">89.3</td><td class="preview">**核心结论**：在查询返回的70家医药上市公司2022年资产负债数据中，未包含片仔癀（600436）的财务数据，因此无法提供其2022年度的资产总额、负债总额及股东权益总额信息。
+
+**数据覆盖说明**  
+1. **查询范围局限性**：…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.24);font-weight:600;">24.0</td><td style="background:rgba(239,68,68,0.1);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(239,68,68,0.27);font-weight:600;">1.0</td><td style="background:rgba(239,68,68,0.17400000000000002);font-weight:600;">6.3</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">68.3</td><td class="preview">根据华兴会计师事务所出具的审计报告，片仔癀（600436）2022年全年的主要财务数据（合并报表）如下：
+
+财务指标	2022年12月31日金额（亿元）
+资产总额	146.04
+负债总额	27.80
+股东权益总额	118.24
+其中：归属于…</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.24);font-weight:600;">24.0</td><td style="background:rgba(239,68,68,0.1);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(239,68,68,0.15);font-weight:600;">7.5</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="font-weight:800;font-size:15px;">74.5</td><td class="preview">片仔癀（600436）2022 年合并资产负债表核心数据如下（单位：万元）：
+
+指标	2022 年 12 月 31 日金额
+资产总额	1,460,400.00
+负债总额	278,000.00
+股东权益总额	1,182,400.00
+
+数据来…</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.27);font-weight:600;">27.0</td><td style="background:rgba(16,185,129,0.26);font-weight:600;">13.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(239,68,68,0.105);font-weight:600;">6.5</td><td style="background:rgba(239,68,68,0.13999999999999999);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">82.5</td><td class="preview">根据搜索结果，以下是片仔癀（600436）2022年全年的资产负债表数据：
+
+片仔癀（600436）2022年资产负债表数据（单位：万元）
+项目	金额（万元）
+资产总额	1,460,384.45
+负债总额	277,990.53
+股东权益总额…</td></tr></tbody></table></div></div><div class="card">
+            <div class="card-header">B1008: 香雪制药2024年研发费用是多少
+                <span class="tag">事实查询</span>
+                <span class="tag tag-diff">easy</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.3);font-weight:600;">30.0</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">12.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.255);font-weight:600;">8.5</td><td style="background:rgba(16,185,129,0.24399999999999997);font-weight:600;">12.2</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">92.7</td><td class="preview">香雪制药2024年研发费用呈现 **逐季递减** 趋势，截至三季度累计投入 **7077.83万元**，其中半年度研发费用达 **3535.44万元**，占比最高。
+
+{{CHART}}
+
+**研发投入节奏分析**  
+1. **Q1-Q3…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">28.0</td><td style="background:rgba(16,185,129,0.21999999999999997);font-weight:600;">11.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(239,68,68,0.27);font-weight:600;">1.0</td><td style="background:rgba(239,68,68,0.21);font-weight:600;">4.5</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="font-weight:800;font-size:15px;">69.5</td><td class="preview">根据2024年年度报告，香雪制药2024年的研发费用为 1.14亿元。
+
+与2023年的1.23亿元相比，减少了7.77%，研发投入占营业收入的比例为6.12%。</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">28.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(239,68,68,0.18);font-weight:600;">4.0</td><td style="background:rgba(239,68,68,0.11399999999999999);font-weight:600;">9.3</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">79.3</td><td class="preview">香雪制药（ST 香雪，300147）2024 年研发费用为7,939.46 万元（人民币），数据源自其 2024 年年度报告。
+
+补充信息：
+2024 年全年营业总收入：18.59 亿元
+研发费用占营收比例：约 4.27%
+对比：2023 …</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">28.0</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">12.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(239,68,68,0.105);font-weight:600;">6.5</td><td style="background:rgba(16,185,129,0.284);font-weight:600;">14.2</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">90.7</td><td class="preview">根据搜索结果，关于香雪制药2024年研发费用的情况如下：
+
+已确认数据
+
+2023年研发费用：8,975.60万元（同比下降5.31%）
+
+2024年一季度研发费用：1,732.76万元（同比下降3.42%）
+
+2022年研发费用：9,47…</td></tr></tbody></table></div></div><div class="card">
+            <div class="card-header">B1051: 对比白云山、云南白药、片仔癀2025年第三季度的核心盈利能力指标（销售毛利率、销售净利率、ROE），用雷达图展示差异
+                <span class="tag">多公司对比</span>
+                <span class="tag tag-diff">medium</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.27799999999999997);font-weight:600;">27.8</td><td style="background:rgba(16,185,129,0.23);font-weight:600;">11.5</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(16,185,129,0.25);font-weight:600;">12.5</td><td style="background:rgba(16,185,129,0.222);font-weight:600;">7.4</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">83.2</td><td class="preview">**核心结论**：2025年第三季度，**片仔癀**在毛利率、净利率和ROE三项核心盈利能力指标上全面领先，其中**毛利率高达35.08%**，显著高于云南白药（28.26%）和白云山（16.09%）。
+
+{{CHART}}
+
+**盈利能力…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.27);font-weight:600;">27.0</td><td style="background:rgba(239,68,68,0.13);font-weight:600;">8.5</td><td style="background:rgba(239,68,68,0.15);font-weight:600;">5.0</td><td style="background:rgba(239,68,68,0.15);font-weight:600;">5.0</td><td style="background:rgba(16,185,129,0.24399999999999997);font-weight:600;">12.2</td><td style="background:rgba(16,185,129,0.255);font-weight:600;">8.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">76.2</td><td class="preview">下面这张雷达图直观对比了三家公司在2025年第三季度的核心盈利指标。整体来看，片仔癀的盈利结构最为突出，毛利率和净利率都大幅领先；云南白药的三个指标相对均衡，盈利能力稳健；白云山则表现为"高营收、低盈利"的薄利特征。
+
+数据来源说明：以下指…</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.27);font-weight:600;">27.0</td><td style="background:rgba(239,68,68,0.13);font-weight:600;">8.5</td><td style="background:rgba(239,68,68,0.21);font-weight:600;">3.0</td><td style="background:rgba(16,185,129,0.255);font-weight:600;">8.5</td><td style="background:rgba(16,185,129,0.238);font-weight:600;">11.9</td><td style="background:rgba(16,185,129,0.22499999999999998);font-weight:600;">7.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">76.4</td><td class="preview">一、核心指标数据（2025 年前三季度，截至 9 月 30 日）
+数据来源：各公司 2025 年三季报（同花顺、公司公告）
+
+公司	销售毛利率	销售净利率	加权 ROE（%）
+片仔癀	38.93%	28.66%	14.31%
+云南白药	30…</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.27);font-weight:600;">27.0</td><td style="background:rgba(239,68,68,0.11);font-weight:600;">9.5</td><td style="background:rgba(239,68,68,0.15);font-weight:600;">5.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.22499999999999998);font-weight:600;">7.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">83.0</td><td class="preview">根据搜索到的2025年第三季度财务报告数据，我已完成白云山、云南白药、片仔癀三家中药龙头企业核心盈利能力指标的对比分析。
+
+2025年第三季度核心盈利能力指标对比
+公司	销售毛利率 (%)	销售净利率 (%)	ROE (%)
+白云山	18.…</td></tr></tbody></table></div></div><div class="card">
+            <div class="card-header">B1028: 对比白云山（600332）、云南白药（000538）、片仔癀（600436）2022-2025年第三季度的"净利润（万元
+                <span class="tag">多公司对比</span>
+                <span class="tag tag-diff">medium</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.29100000000000004);font-weight:600;">29.1</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">10.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(16,185,129,0.23);font-weight:600;">11.5</td><td style="background:rgba(16,185,129,0.24299999999999997);font-weight:600;">8.1</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="font-weight:800;font-size:15px;">84.2</td><td class="preview">**2025年第三季度净利润对比显示，云南白药以11.44亿元领跑，白云山（7.94亿元）和片仔癀（6.87亿元）分列二三位**。由于数据限制，当前仅能获取这三家企业的2025Q3数据，无法完整呈现2022-2025年的连续季度趋势。
+
+{…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.29100000000000004);font-weight:600;">29.1</td><td style="background:rgba(239,68,68,0.13);font-weight:600;">8.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(239,68,68,0.105);font-weight:600;">6.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.24299999999999997);font-weight:600;">8.1</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">87.2</td><td class="preview">白云山、云南白药、片仔癀 2022—2025年第三季度净利润对比分析
+一、数据汇总
+
+以下为三家医药龙头企业2022—2025年各年第三季度（7—9月）的单季度归属于上市公司股东的净利润（归母净利润） 数据，已统一换算为万元单位：
+
+年度	…</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.23099999999999998);font-weight:600;">23.1</td><td style="background:rgba(239,68,68,0.18);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.255);font-weight:600;">8.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.288);font-weight:600;">9.6</td><td style="background:rgba(239,68,68,0.15);font-weight:600;">5.0</td><td style="font-weight:800;font-size:15px;">77.2</td><td class="preview">一、净利润数据（2022-2025 年 Q3，单位：万元）
+数据说明：采用归母净利润（归属母公司股东的净利润），单位统一为万元。
+
+报告期	白云山 (600332)	云南白药 (000538)	片仔癀 (600436)
+2022 年 Q3	…</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.27);font-weight:600;">27.0</td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">14.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">94.0</td><td class="preview">我已经收集了三家公司的大致净利润数据。现在让我用Python生成多系列折线图来展示这些数据。
+
+白云山、云南白药、片仔癀 2022-2025年第三季度净利润对比分析
+
+我已根据三家公司的公开财务报告数据，整理了2022-2025年的净利润趋…</td></tr></tbody></table></div></div><div class="card">
+            <div class="card-header">B1034: 计算云南白药（000538）2025年第三季度营业总收入的环比增长率（环比增长率=(本季度值-上季度值)/上季度值*10
+                <span class="tag">指标计算</span>
+                <span class="tag tag-diff">medium</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">28.0</td><td style="background:rgba(16,185,129,0.23);font-weight:600;">11.5</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.256);font-weight:600;">12.8</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="font-weight:800;font-size:15px;">87.3</td><td class="preview">云南白药2025年第三季度营业总收入呈现 **环比下滑趋势**，较第二季度下降**9.78%**，营收规模从**104.16亿元**收缩至**93.97亿元**。
+
+{{CHART}}
+
+**季度营收表现分析**
+2025年第二季度营收达到…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.26);font-weight:600;">26.0</td><td style="background:rgba(239,68,68,0.18);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.212);font-weight:600;">10.6</td><td style="background:rgba(16,185,129,0.22499999999999998);font-weight:600;">7.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">78.1</td><td class="preview">根据公司财报数据，云南白药2025年第二季度和第三季度的营业总收入及环比增长率如下：
+
+季度	营业总收入（万元）	环比增长率
+2025年第二季度	1,041,600.00	—
+2025年第三季度	939,711.13	-9.78%
+
+计算说…</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.25);font-weight:600;">25.0</td><td style="background:rgba(239,68,68,0.18);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.238);font-weight:600;">11.9</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="font-weight:800;font-size:15px;">75.9</td><td class="preview">计算过程：
+2025 年第二季度营业总收入：104.16 亿元 = 1,041,600 万元
+2025 年第三季度营业总收入：93.97 亿元 = 939,700 万元
+
+环比增长率 = (939,700 - 1,041,600) / 1,…</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.27);font-weight:600;">27.0</td><td style="background:rgba(16,185,129,0.23);font-weight:600;">11.5</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.27199999999999996);font-weight:600;">13.6</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">88.1</td><td class="preview">根据搜索结果，云南白药（000538）2025年营业总收入数据如下：
+
+2025年第二季度和第三季度营业总收入及环比增长率
+指标	2025年第二季度	2025年第三季度
+营业总收入（万元）	1,041,600.00	939,700.00
+环…</td></tr></tbody></table></div></div><div class="card">
+            <div class="card-header">B1010: 对比白云山（600332）2022年至2025年第三季度的"营业总收入同比增长率"，展示各报告期的增长率数据，并生成趋势
+                <span class="tag">趋势分析</span>
+                <span class="tag tag-diff">medium</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">28.0</td><td style="background:rgba(16,185,129,0.23);font-weight:600;">11.5</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(16,185,129,0.21999999999999997);font-weight:600;">11.0</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">82.5</td><td class="preview">**白云山（600332）的营业总收入增速呈现"先升后降再反弹"的波动特征**，2023年中期达到**7.39%**的高点后持续下滑，2024年第三季度首次出现**负增长（-1.08%）**，但在2025年第三季度强势反弹至**9.74%*…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.29);font-weight:600;">29.0</td><td style="background:rgba(16,185,129,0.23);font-weight:600;">11.5</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(239,68,68,0.105);font-weight:600;">6.5</td><td style="background:rgba(16,185,129,0.222);font-weight:600;">11.1</td><td style="background:rgba(16,185,129,0.22499999999999998);font-weight:600;">7.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">81.6</td><td class="preview">根据白云山（600332）2022年至2025年各年第三季度报告的数据，公司各报告期的营业总收入及同比增长率如下：
+
+报告期	营业总收入（亿元）	同比增长率
+2022年Q3	175.85	1.00%
+2023年Q3	182.14	3.58%…</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.21);font-weight:600;">21.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">9.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.264);font-weight:600;">13.2</td><td style="background:rgba(239,68,68,0.165);font-weight:600;">4.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">69.7</td><td class="preview">一、营业总收入同比增长率（2022-2025 年三季度）
+数据说明：以下为1-9 月累计营收的同比增长率（%）
+
+报告期	2022 年三季报	2023 年三季报	2024 年三季报	2025 年三季报
+营业总收入（亿元）	548.06	58…</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.24);font-weight:600;">24.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">9.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">82.0</td><td class="preview">现在我已经获取了白云山2022年至2025年第三季度的财务数据。让我为您整理数据并生成趋势折线图。
+
+白云山(600332)营业总收入同比增长率对比分析
+
+根据搜索结果，我为您整理了白云山2022年至2025年第三季度的营业总收入同比增长率…</td></tr></tbody></table></div></div><div class="card">
+            <div class="card-header">B1045: 云南白药2022-2025年第三季度的资产负债率变化趋势
+                <span class="tag">趋势分析</span>
+                <span class="tag tag-diff">medium</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.3);font-weight:600;">30.0</td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">14.0</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.255);font-weight:600;">8.5</td><td style="background:rgba(16,185,129,0.26);font-weight:600;">13.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">93.5</td><td class="preview">云南白药2022-2025年第三季度的资产负债率呈现 **先降后升再企稳** 的特征，整体保持在 **25%-28%** 的低位区间，反映出公司 **稳健的财务结构**。2025年第三季度资产负债率为 **25.36%**，较2024年同期…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.3);font-weight:600;">30.0</td><td style="background:rgba(239,68,68,0.16999999999999998);font-weight:600;">6.5</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(239,68,68,0.18);font-weight:600;">4.0</td><td style="background:rgba(16,185,129,0.21999999999999997);font-weight:600;">11.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">77.5</td><td class="preview">根据公开财报数据，云南白药在2022年至2025年第三季度末的资产负债率呈现平稳下降的趋势。
+
+各年度具体数据整理如下：
+
+日期	资产负债率	备注
+2022年9月30日	26.82%	由总资产约516.84亿元和总负债约138.59亿元计算…</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.3);font-weight:600;">30.0</td><td style="background:rgba(239,68,68,0.18);font-weight:600;">6.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">83.0</td><td class="preview">根据公开财报数据，云南白药（000538）2022-2025 年第三季度的资产负债率呈现 先降→再升→后降 的波动趋势，整体处于 25%~27% 的较低区间，财务结构稳健。
+
+一、核心数据（9 月 30 日）
+时间	资产负债率	同比变动	总…</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.3);font-weight:600;">30.0</td><td style="background:rgba(16,185,129,0.23);font-weight:600;">11.5</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(239,68,68,0.105);font-weight:600;">6.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">89.0</td><td class="preview">根据搜索结果，我整理了云南白药2022-2025年第三季度的资产负债率变化数据：
+
+云南白药2022-2025年第三季度资产负债率变化趋势
+年份	季度	资产负债率
+2022年	第三季度	26.64%
+2023年	第三季度	25.80%
+20…</td></tr></tbody></table></div></div><div class="card">
+            <div class="card-header">B2067: 东阿阿胶2022-2025年第三季度营业总收入复合增长率达20%，远超行业均值，请结合财务数据和研报（如新品上市、市场拓
+                <span class="tag">深度分析</span>
+                <span class="tag tag-diff">hard</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">28.0</td><td style="background:rgba(239,68,68,0.1);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.26);font-weight:600;">13.0</td><td style="background:rgba(16,185,129,0.24599999999999997);font-weight:600;">8.2</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">89.2</td><td class="preview">**东阿阿胶2022-2025年前三季度营业总收入复合增长率为16.28%，在66家中药企业中排名第5，显著高于行业平均水平**。虽然未达到用户所述的20%增速，但其表现仍属于行业头部梯队，主要得益于产品结构优化和渠道改革。
+
+{{CHAR…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.24);font-weight:600;">24.0</td><td style="background:rgba(239,68,68,0.13999999999999999);font-weight:600;">8.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.264);font-weight:600;">13.2</td><td style="background:rgba(16,185,129,0.23099999999999998);font-weight:600;">7.7</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">78.9</td><td class="preview">自2022年以来，东阿阿胶营业总收入的年复合增长率远超行业均值，其增长并非依赖单一产品或提价，而是由一套完整的增长体系驱动。驱动东阿阿胶高增长的核心是“药品+健康消费品”双轮驱动战略，叠加其持续的品牌焕新、渠道数字化变革以及运营效率的显著提…</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.26);font-weight:600;">26.0</td><td style="background:rgba(239,68,68,0.18);font-weight:600;">6.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.284);font-weight:600;">14.2</td><td style="background:rgba(16,185,129,0.26099999999999995);font-weight:600;">8.7</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">80.9</td><td class="preview">东阿阿胶2022-2025年第三季度营业总收入复合增长率达20%，远超行业均值。核心驱动力分析如下：
+
+一、营收数据与增长概览
+
+年份	前三季度营收（亿元）	同比增长
+2022 Q3	29.80	-
+2023 Q3	52.53	+76.3%…</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.29);font-weight:600;">29.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">9.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.23099999999999998);font-weight:600;">7.7</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">86.7</td><td class="preview">根据搜索结果，我现在对东阿阿胶2022-2025年的财务数据和增长驱动力进行综合分析：
+
+东阿阿胶2022-2025年第三季度财务数据概览
+时间段	营业总收入	同比增长	归母净利润	同比增长
+2022年Q1-Q3	30.46亿元	7.81%…</td></tr></tbody></table></div></div><div class="card">
+            <div class="card-header">B2059: 针对三九、白云山、云南白药、片仔癀等企业，查询2022-2025年第三季度的营业总收入；计算各年度的同比增长率；生成营收
+                <span class="tag">综合分析</span>
+                <span class="tag tag-diff">hard</span>
+            </div><div class="card-body"><table class="q-table"><thead><tr><th>系统</th><th>数据准确</th><th>数据溯源</th><th>计算可解</th><th>可视化能</th><th>分析深度</th><th>响应完整</th><th>抗幻觉能</th><th>总分</th><th>摘要</th></tr></thead><tbody><tr><td><b>本系统（智能问数助手</b></td><td style="background:rgba(16,185,129,0.273);font-weight:600;">27.3</td><td style="background:rgba(239,68,68,0.1);font-weight:600;">10.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(16,185,129,0.25);font-weight:600;">12.5</td><td style="background:rgba(16,185,129,0.22499999999999998);font-weight:600;">7.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">83.3</td><td class="preview">**2025年第三季度头部药企营收分化明显**，白云山以**197.71亿元**领跑且同比增长**9.74%**，而片仔癀营收**20.64亿元**同比下滑**26.28%**，呈现两极趋势。华润三九增速最快（**27.37%**），云南白…</td></tr><tr><td><b>DeepSeek</b></td><td style="background:rgba(16,185,129,0.293);font-weight:600;">29.3</td><td style="background:rgba(239,68,68,0.13999999999999999);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.21);font-weight:600;">7.0</td><td style="background:rgba(239,68,68,0.105);font-weight:600;">6.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.27299999999999996);font-weight:600;">9.1</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">84.9</td><td class="preview">以下是华润三九（三九）、白云山、云南白药、片仔癀四家代表性中药企业2022-2025年各年第三季度（7-9月）单季度的营收数据、同比增长率，以及与医药行业整体增速的对比。
+
+一、各企业Q3营收及同比增速
+1. 华润三九（000999.SZ）…</td></tr><tr><td><b>豆包</b></td><td style="background:rgba(16,185,129,0.263);font-weight:600;">26.3</td><td style="background:rgba(239,68,68,0.16999999999999998);font-weight:600;">6.5</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">6.0</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">15.0</td><td style="background:rgba(16,185,129,0.255);font-weight:600;">8.5</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">81.3</td><td class="preview">一、2022-2025 年 Q3 营业总收入（亿元）
+数据来源：各公司财报（前三季度累计值）
+
+公司	2022 年 Q3	2023 年 Q3	2024 年 Q3	2025 年 Q3
+华润三九	121.11	186.08	197.40	219…</td></tr><tr><td><b>秘塔AI</b></td><td style="background:rgba(16,185,129,0.27);font-weight:600;">27.0</td><td style="background:rgba(239,68,68,0.12);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.24);font-weight:600;">8.0</td><td style="background:rgba(16,185,129,0.27);font-weight:600;">9.0</td><td style="background:rgba(16,185,129,0.27999999999999997);font-weight:600;">14.0</td><td style="background:rgba(16,185,129,0.23399999999999999);font-weight:600;">7.8</td><td style="background:rgba(16,185,129,0.3);font-weight:600;">10.0</td><td style="font-weight:800;font-size:15px;">84.8</td><td class="preview">三九、白云山、云南白药、片仔癀2022-2025年前三季度营收分析
+一、营业总收入数据
+
+根据搜索结果[1][2][3]，四家企业2022-2025年前三季度营业总收入如下：
+
+公司	2022年Q3（亿元）	2023年Q3（亿元）	2024…</td></tr></tbody></table></div></div>
+</div>
+</body>
+</html>

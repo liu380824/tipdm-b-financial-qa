@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>财务报告数据质量可视化报告</title>
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: rgba(15, 23, 42, 0.78);
+      --panel-border: rgba(148, 163, 184, 0.16);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #8b5cf6;
+      --accent-2: #06b6d4;
+      --good: #22c55e;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+      --shadow: 0 20px 50px rgba(2, 6, 23, 0.45);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0%, #020617 45%, #01030a 100%);
+      color: var(--text);
+    }
+    .container { max-width: 1380px; margin: 0 auto; padding: 36px 24px 64px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      padding: 24px;
+    }
+    .title { font-size: 34px; font-weight: 700; margin: 0 0 12px; }
+    .subtitle { color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .score-ring {
+      display: flex; align-items: center; justify-content: center;
+      width: 220px; height: 220px; margin: 12px auto 18px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) 0 89.89%, rgba(148,163,184,0.12) 0 100%);
+      position: relative;
+    }
+    .score-ring::after {
+      content: ''; position: absolute; inset: 16px; border-radius: 50%; background: #081120;
+      border: 1px solid rgba(148,163,184,0.12);
+    }
+    .score-ring-content { position: relative; z-index: 1; text-align: center; }
+    .score-ring-content .score { font-size: 48px; font-weight: 700; }
+    .score-ring-content .grade { color: #c4b5fd; margin-top: 6px; font-size: 18px; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-card { padding: 18px; border-radius: 20px; background: rgba(15,23,42,0.72); border: 1px solid rgba(148,163,184,0.12); }
+    .stat-label { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+    .stat-value { font-size: 28px; font-weight: 700; }
+    .stat-sub { color: #cbd5e1; font-size: 13px; margin-top: 6px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+    h2 { margin: 0 0 18px; font-size: 22px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .chip { padding: 10px 14px; border-radius: 999px; background: rgba(124,58,237,0.14); color: #ddd6fe; font-size: 13px; border: 1px solid rgba(167,139,250,0.18); }
+    .list { margin: 0; padding-left: 18px; color: #e5e7eb; line-height: 1.8; }
+    .list li { margin-bottom: 8px; }
+    .section-note { color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .chart { width: 100%; border-radius: 18px; overflow: hidden; border: 1px solid rgba(148,163,184,0.12); background: rgba(15,23,42,0.64); }
+    .metric-row { display: grid; grid-template-columns: 150px 1fr 70px; gap: 12px; align-items: center; margin-bottom: 12px; }
+    .metric-row .bar { height: 12px; border-radius: 999px; background: rgba(148,163,184,0.14); overflow: hidden; }
+    .metric-row .bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .footer { color: var(--muted); text-align: center; margin-top: 28px; font-size: 13px; }
+    @media (max-width: 1100px) {
+      .hero, .grid-2, .grid-3, .stats { grid-template-columns: 1fr; }
+      .score-ring { width: 180px; height: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="panel">
+        <div class="title">财务报告数据质量可视化报告</div>
+        <div class="subtitle">生成时间：2026-04-25 09:20:39<br />数据库：<项目目录>\</div>
+        <div class="chips">
+          <div class="chip">公司数量 10</div>
+          <div class="chip">报告期组合 120</div>
+          <div class="chip">总评分 89.89</div>
+          <div class="chip">评级 良好</div>
+        </div>
+        <div style="margin-top: 20px;" class="section-note">本次任务总体评级为良好，总分 89.89。当前最强维度是 完整性，最需要提升的是 质量告警健康度。</div>
+      </div>
+      <div class="panel" style="text-align:center;">
+        <div class="score-ring">
+          <div class="score-ring-content">
+            <div class="score">89.89</div>
+            <div class="grade">良好</div>
+          </div>
+        </div>
+        <div class="section-note">总分用于横向比较任务质量，不等同于人工标注准确率。</div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat-card"><div class="stat-label">完整性得分</div><div class="stat-value">96.96</div><div class="stat-sub">整体填充率 96.56%</div></div>
+      <div class="stat-card"><div class="stat-label">可追溯性得分</div><div class="stat-value">86.78</div><div class="stat-sub">追溯覆盖率 95.12%</div></div>
+      <div class="stat-card"><div class="stat-label">告警健康度</div><div class="stat-value">80.87</div><div class="stat-sub">Warning 164 / Error 0</div></div>
+      <div class="stat-card"><div class="stat-label">Regex占比</div><div class="stat-value">72.24%</div><div class="stat-sub">LLM 2.56% / Calculated 25.21%</div></div>
+    </section>
+
+    <section class="grid-2">
+      <div class="panel">
+        <h2>评分维度</h2>
+        <div class="section-note">分数越高越稳定，可用于比较不同导入批次和规则版本。</div>
+        <div class="metric-row"><div>完整性</div><div class="bar"><span style="width:96.96%"></span></div><div>96.96</div></div><div class="metric-row"><div>可追溯性</div><div class="bar"><span style="width:86.78%"></span></div><div>86.78</div></div><div class="metric-row"><div>质量告警健康度</div><div class="bar"><span style="width:80.87%"></span></div><div>80.87</div></div>
+      </div>
+      <div class="panel">
+        <h2>总体解读</h2>
+        <ul class="list"><li>regex 提取占比为 72.24%，多数值来自更稳定的显式提取。</li><li>最近一次导入没有 error 级问题，当前流程没有出现明显硬失败。</li></ul>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="panel"><h2>分项评分图</h2><img class="chart" src="charts/score_panel.svg" alt="score_panel" /></div>
+      <div class="panel"><h2>各表填充率</h2><img class="chart" src="charts/table_fill_rate.svg" alt="table_fill_rate" /></div>
+    </section>
+
+    <section class="grid-2">
+      <div class="panel"><h2>提取方式占比</h2><img class="chart" src="charts/extract_methods.svg" alt="extract_methods" /></div>
+      <div class="panel"><h2>问题类型分布</h2><img class="chart" src="charts/issue_breakdown.svg" alt="issue_breakdown" /></div>
+    </section>
+
+    <section class="grid-3">
+      <div class="panel">
+        <h2>优势</h2>
+        <ul class="list"><li>regex 提取占比为 72.24%，多数值来自更稳定的显式提取。</li><li>最近一次导入没有 error 级问题，当前流程没有出现明显硬失败。</li></ul>
+      </div>
+      <div class="panel">
+        <h2>风险</h2>
+        <ul class="list"><li>计算字段占比达到 25.21%，说明部分指标依赖后处理而非原文显式提取。</li><li>最近任务共有 164 条 warning，主要问题类型需要持续压降。</li><li>低覆盖最明显的字段是 现金流量表.financing_cf_cash_from_borrowing，当前填充率为 63.33%。</li></ul>
+      </div>
+      <div class="panel">
+        <h2>优先动作</h2>
+        <ul class="list"><li>优先补齐低覆盖字段：现金流量表.financing_cf_cash_from_borrowing(63.33%)、核心业绩指标表.net_profit_qoq_growth(75.00%)、核心业绩指标表.operating_revenue_qoq_growth(75.83%)</li><li>优先复核高依赖后处理字段：balance_sheet.asset_total_assets_yoy_growth、balance_sheet.liability_total_liabilities_yoy_growth、core_performance_indicators_sheet.net_profit_margin</li><li>优先压降告警类型：consistency_check(128)、range_check(36)</li></ul>
+      </div>
+    </section>
+
+    <div class="footer">报告目录：<项目目录>\</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{
+  "database": {
+    "path": "financial_reports.db"
+  },
+  "reports_dir": "<附件2：财务报告 所在目录，例如 ./data/附件2：财务报告>",
+  "research_reports_dir": "<附件5：研报数据 所在目录，例如 ./data/附件5：研报数据>",
+  "embedding": {
+    "api_key": "<你的 Embedding 服务密钥，推荐使用环境变量注入>",
+    "base_url": "https://api.siliconflow.cn/v1",
+    "model": "BAAI/bge-m3",
+    "reranker_model": "BAAI/bge-reranker-v2-m3"
+  },
+  "llm": {
+    "api_key": "<你的大模型服务密钥>",
+    "base_url": "https://api.siliconflow.cn/v1",
+    "model": "Pro/deepseek-ai/DeepSeek-V3",
+    "request_timeout": 120,
+    "intent_temperature": 0.1,
+    "query_plan_temperature": 0.1,
+    "analysis_temperature": 0.3,
+    "general_reply_temperature": 0.4,
+    "planner_decompose_temperature": 0.1,
+    "synthesis_temperature": 0.4,
+    "ref_extract_temperature": 0.1
+  },
+  "intent_llm": {
+    "api_key": "<你的大模型服务密钥>",
+    "base_url": "https://api.siliconflow.cn/v1",
+    "model": "Qwen/Qwen2.5-72B-Instruct",
+    "request_timeout": 60
+  },
+  "extract_llm": {
+    "api_key": "<你的大模型服务密钥>",
+    "base_url": "https://api.siliconflow.cn/v1",
+    "model": "Qwen/Qwen2.5-72B-Instruct",
+    "request_timeout": 120
+  },
+  "parallel": {
+    "max_workers": 4
+  },
+  "stock_abbr_to_code": {
+    "凯莱英": "002821",
+    "百普赛斯": "301080",
+    "迈普医学": "301033",
+    "百克生物": "688276",
+    "药明康德": "603259",
+    "成都先导": "688222",
+    "百诚医药": "301096",
+    "昭衍新药": "603127",
+    "泰格医药": "300347",
+    "迪安诊断": "300244"
+  },
+  "knowledge_base": {
+    "index_concurrency": 4,
+    "embed_batch_size": 64,
+    "embed_max_chars": 2000,
+    "child_chunk_min": 100,
+    "child_chunk_max": 300,
+    "parent_chunk_max": 900,
+    "chunk_overlap": 50,
+    "ocr_dpi": 200,
+    "ocr_workers": 4,
+    "bm25_weight": 0.3,
+    "vector_weight": 0.7,
+    "rrf_k": 60,
+    "rerank_candidates": 30,
+    "top_k": 5
+  },
+  "assistant": {
+    "enable_multi_intent": true,
+    "kb_top_k": 10,
+    "default_auto_chart": true,
+    "default_enable_context": true
+  }
+}

@@ -1,0 +1,328 @@
+{
+  "_comment": "标准答案文件。key_numbers 为评分基准，可人工修改。verified=true 表示已审核。",
+  "generated_at": "2026-04-21 17:53:10",
+  "database": "E:\\0000\\0\\泰迪杯22\\financial_reports.db",
+  "questions": {
+    "B1030": {
+      "question_text": "从资产负债表中提取片仔癀（600436）2022年全年的资产总额、负债总额、股东权益总额（单位：万元）",
+      "key_entities": [
+        "片仔癀",
+        "600436",
+        "2022",
+        "资产总额",
+        "负债总额",
+        "股东权益总额"
+      ],
+      "sql_used": "SELECT asset_total_assets, liability_total_liabilities, equity_total_equity\n        FROM balance_sheet\n        WHERE stock_code = '600436' AND report_period = '2022FY'\n        LIMIT 1",
+      "query_rows": [
+        {
+          "asset_total_assets": 1142916.89,
+          "liability_total_liabilities": 67476.87,
+          "equity_total_equity": 1075440.02
+        }
+      ],
+      "key_numbers": [
+        1142916.89,
+        67476.87,
+        1075440.02
+      ],
+      "verified": false
+    },
+    "B1008": {
+      "question_text": "香雪制药2024年研发费用是多少",
+      "key_entities": [
+        "香雪制药",
+        "2024",
+        "研发费用"
+      ],
+      "sql_used": "SELECT operating_expense_rnd_expenses\n        FROM income_sheet\n        WHERE stock_code = '300147' AND report_period = '2024FY'\n        LIMIT 1",
+      "query_rows": [],
+      "key_numbers": [],
+      "verified": false
+    },
+    "B1051": {
+      "question_text": "对比白云山、云南白药、片仔癀2025年第三季度的核心盈利能力指标（销售毛利率、销售净利率、ROE），用雷达图展示差异",
+      "key_entities": [
+        "白云山",
+        "云南白药",
+        "片仔癀",
+        "2025",
+        "销售毛利率",
+        "销售净利率",
+        "ROE",
+        "雷达图"
+      ],
+      "sql_used": "SELECT stock_abbr, gross_profit_margin, net_profit_margin, roe\n        FROM core_performance_indicators_sheet\n        WHERE stock_code IN ('600332','000538','600436')\n          AND report_period = '2025Q3'",
+      "query_rows": [
+        {
+          "stock_abbr": "云南白药",
+          "gross_profit_margin": 28.2575,
+          "net_profit_margin": 12.1762,
+          "roe": 2.8
+        },
+        {
+          "stock_abbr": "白云山",
+          "gross_profit_margin": 16.0939,
+          "net_profit_margin": 4.0154,
+          "roe": 2.09
+        },
+        {
+          "stock_abbr": "片仔癀",
+          "gross_profit_margin": 35.0818,
+          "net_profit_margin": 33.2895,
+          "roe": 4.68
+        }
+      ],
+      "key_numbers": [
+        28.2575,
+        12.1762,
+        2.8,
+        16.0939,
+        4.0154,
+        2.09,
+        35.0818,
+        33.2895,
+        4.68
+      ],
+      "verified": false
+    },
+    "B1028": {
+      "question_text": "对比白云山（600332）、云南白药（000538）、片仔癀（600436）2022-2025年第三季度的\"净利润（万元）\"，生成多系列折线图展示趋势。",
+      "key_entities": [
+        "白云山",
+        "云南白药",
+        "片仔癀",
+        "2022-2025",
+        "第三季度",
+        "净利润",
+        "折线图"
+      ],
+      "sql_used": "SELECT stock_abbr, report_period, net_profit\n        FROM income_sheet\n        WHERE stock_code IN ('600332','000538','600436')\n          AND report_period IN ('2022Q3','2023Q3','2024Q3','2025Q3')\n        ORDER BY stock_code, report_period",
+      "query_rows": [
+        {
+          "stock_abbr": "云南白药",
+          "report_period": "2023Q3",
+          "net_profit": 129546.58
+        },
+        {
+          "stock_abbr": "云南白药",
+          "report_period": "2024Q3",
+          "net_profit": 113789.82
+        },
+        {
+          "stock_abbr": "云南白药",
+          "report_period": "2025Q3",
+          "net_profit": 114420.84
+        },
+        {
+          "stock_abbr": "白云山",
+          "report_period": "2023Q3",
+          "net_profit": 98000.2
+        },
+        {
+          "stock_abbr": "白云山",
+          "report_period": "2024Q3",
+          "net_profit": 60941.2
+        }
+      ],
+      "key_numbers": [
+        129546.58,
+        113789.82,
+        114420.84,
+        98000.2,
+        60941.2,
+        79391.11,
+        86381.14,
+        96514.51,
+        68703.84
+      ],
+      "verified": false
+    },
+    "B1034": {
+      "question_text": "计算云南白药（000538）2025年第三季度营业总收入的环比增长率（环比增长率=(本季度值-上季度值)/上季度值*100），并展示2025年第二季度和第三季度的营业总收入（万元）及环比增长率（保留两位小数）。",
+      "key_entities": [
+        "云南白药",
+        "000538",
+        "2025",
+        "第三季度",
+        "营业总收入",
+        "环比增长率"
+      ],
+      "sql_used": "SELECT report_period, total_operating_revenue\n        FROM income_sheet\n        WHERE stock_code = '000538'\n          AND report_period IN ('2025HY','2025Q3')\n        ORDER BY report_period",
+      "query_rows": [
+        {
+          "report_period": "2025HY",
+          "total_operating_revenue": 2125710.29
+        },
+        {
+          "report_period": "2025Q3",
+          "total_operating_revenue": 939711.13
+        }
+      ],
+      "key_numbers": [
+        2125710.29,
+        939711.13
+      ],
+      "verified": false
+    },
+    "B1010": {
+      "question_text": "对比白云山（600332）2022年至2025年第三季度的\"营业总收入同比增长率\"，展示各报告期的增长率数据，并生成趋势折线图。",
+      "key_entities": [
+        "白云山",
+        "600332",
+        "2022",
+        "2025",
+        "营业总收入同比增长率",
+        "折线图"
+      ],
+      "sql_used": "SELECT report_period, total_operating_revenue, operating_revenue_yoy_growth\n        FROM income_sheet\n        WHERE stock_code = '600332'\n          AND report_period IN ('2022Q3','2023Q3','2024Q3','2025Q3')\n        ORDER BY report_period",
+      "query_rows": [
+        {
+          "report_period": "2023Q3",
+          "total_operating_revenue": 1821421.9,
+          "operating_revenue_yoy_growth": 3.58
+        },
+        {
+          "report_period": "2024Q3",
+          "total_operating_revenue": 1801718.5,
+          "operating_revenue_yoy_growth": -1.08
+        },
+        {
+          "report_period": "2025Q3",
+          "total_operating_revenue": 1977144.77,
+          "operating_revenue_yoy_growth": 9.74
+        }
+      ],
+      "key_numbers": [
+        1821421.9,
+        3.58,
+        1801718.5,
+        -1.08,
+        1977144.77,
+        9.74
+      ],
+      "verified": false
+    },
+    "B1045": {
+      "question_text": "云南白药2022-2025年第三季度的资产负债率变化趋势",
+      "key_entities": [
+        "云南白药",
+        "2022",
+        "2025",
+        "第三季度",
+        "资产负债率",
+        "趋势"
+      ],
+      "sql_used": "SELECT report_period, asset_liability_ratio\n        FROM balance_sheet\n        WHERE stock_code = '000538'\n          AND report_period IN ('2022Q3','2023Q3','2024Q3','2025Q3')\n        ORDER BY report_period",
+      "query_rows": [
+        {
+          "report_period": "2023Q3",
+          "asset_liability_ratio": 25.2096
+        },
+        {
+          "report_period": "2024Q3",
+          "asset_liability_ratio": 27.0967
+        },
+        {
+          "report_period": "2025Q3",
+          "asset_liability_ratio": 25.3557
+        }
+      ],
+      "key_numbers": [
+        25.2096,
+        27.0967,
+        25.3557
+      ],
+      "verified": false
+    },
+    "B2067": {
+      "question_text": "东阿阿胶2022-2025年第三季度营业总收入复合增长率达20%，远超行业均值，请结合财务数据和研报（如新品上市、市场拓展），分析高速增长的核心驱动力。",
+      "key_entities": [
+        "东阿阿胶",
+        "2022-2025",
+        "第三季度",
+        "营业总收入",
+        "复合增长率",
+        "研报"
+      ],
+      "sql_used": "SELECT report_period, total_operating_revenue\n        FROM income_sheet\n        WHERE stock_code = '000423'\n          AND report_period IN ('2022Q3','2023Q3','2024Q3','2025Q3')\n        ORDER BY report_period",
+      "query_rows": [
+        {
+          "report_period": "2023Q3",
+          "total_operating_revenue": 126114.35
+        },
+        {
+          "report_period": "2024Q3",
+          "total_operating_revenue": 158127.13
+        },
+        {
+          "report_period": "2025Q3",
+          "total_operating_revenue": 171565.34
+        }
+      ],
+      "key_numbers": [
+        126114.35,
+        158127.13,
+        171565.34
+      ],
+      "verified": false
+    },
+    "B2059": {
+      "question_text": "针对三九、白云山、云南白药、片仔癀等企业，查询2022-2025年第三季度的营业总收入；计算各年度的同比增长率；生成营收增长趋势折线图；对比上述公司与行业整体的增长差异。",
+      "key_entities": [
+        "三九",
+        "白云山",
+        "云南白药",
+        "片仔癀",
+        "2022-2025",
+        "营业总收入",
+        "同比增长率",
+        "折线图",
+        "行业"
+      ],
+      "sql_used": "SELECT stock_abbr, report_period, total_operating_revenue\n        FROM income_sheet\n        WHERE stock_code IN ('000999','600332','000538','600436')\n          AND report_period IN ('2022Q3','2023Q3','2024Q3','2025Q3')\n        ORDER BY stock_code, report_period",
+      "query_rows": [
+        {
+          "stock_abbr": "云南白药",
+          "report_period": "2023Q3",
+          "total_operating_revenue": 937915.92
+        },
+        {
+          "stock_abbr": "云南白药",
+          "report_period": "2024Q3",
+          "total_operating_revenue": 945986.88
+        },
+        {
+          "stock_abbr": "云南白药",
+          "report_period": "2025Q3",
+          "total_operating_revenue": 939711.13
+        },
+        {
+          "stock_abbr": "华润三九",
+          "report_period": "2023Q3",
+          "total_operating_revenue": 546188.03
+        },
+        {
+          "stock_abbr": "华润三九",
+          "report_period": "2024Q3",
+          "total_operating_revenue": 563427.42
+        }
+      ],
+      "key_numbers": [
+        937915.92,
+        945986.88,
+        939711.13,
+        546188.03,
+        563427.42,
+        717624.37,
+        1821421.9,
+        1801718.5,
+        1977144.77,
+        255460.11,
+        279973.45,
+        206382.9
+      ],
+      "verified": false
+    }
+  }
+}
