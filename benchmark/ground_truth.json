@@ -1,7 +1,7 @@
 {
   "_comment": "标准答案文件。key_numbers 为评分基准，可人工修改。verified=true 表示已审核。",
   "generated_at": "2026-04-21 17:53:10",
-  "database": "E:\\0000\\0\\泰迪杯22\\financial_reports.db",
+  "database": "financial_reports.db",
   "questions": {
     "B1030": {
       "question_text": "从资产负债表中提取片仔癀（600436）2022年全年的资产总额、负债总额、股东权益总额（单位：万元）",

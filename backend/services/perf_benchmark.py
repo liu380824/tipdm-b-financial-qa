@@ -5,12 +5,12 @@
 
 生成 HTML 可视化报告，包含延迟分布、吞吐量、扩展性曲线等图表。
 
-使用方法：
-    python -c "
-    import sys; sys.path.insert(0, r'e:\\0000\\0\\泰迪杯21\\泰迪杯20')
+使用方法（在仓库根目录执行）：
+    python -m backend.services.perf_benchmark
+
+或在代码中调用：
     from backend.services.perf_benchmark import run_full_benchmark
     run_full_benchmark()
-    "
 """
 from __future__ import annotations
 
