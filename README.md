@@ -1,6 +1,37 @@
 # 上市公司财报「智能问数」助手
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/liu380824/tipdm-b-financial-qa?style=social)](https://github.com/liu380824/tipdm-b-financial-qa/stargazers)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](requirements.txt)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)](api_server.py)
+[![Vue](https://img.shields.io/badge/Vue-3.5-42B883?logo=vuedotjs&logoColor=white)](smart-query-ui/)
+[![TipDM Cup](https://img.shields.io/badge/TipDM%20Cup-%E4%B8%80%E7%AD%89%E5%A5%96-gold)](docs/赛题-B题-题目说明.md)
+
 面向 A 股中药上市公司财报的自然语言问数系统，打通 **非结构化财报 PDF → 结构化财务数据库 → 自然语言理解 → SQL 生成 → 数据查询 → 可视化 → 归因分析** 的完整链路，支持多轮对话、意图澄清、多意图自主规划与结果溯源。
+
+![系统首页与全局导航](docs/images/screenshot-home.png)
+
+## 核心结果速览
+
+| 指标 | 结果 |
+|---|---|
+| 核心业绩指标表平均完整率 | **96.3 分**（满分 100） |
+| 字段平均溯源置信度 | **0.82**（字段级溯源到 PDF 页码） |
+| 与主流平台七维度横向对比 | **87.4 分，排名第一**（3 项独占第一、1 项并列；秘塔 AI 86.8、DeepSeek 78.1、豆包 77.6） |
+| 消融实验 | 各增强组件均通过显著性检验；禁用 LLM 深度分析平均质量损失 24.2 分（Cohen's d ≥ 0.8） |
+| 数据规模 | 4 张主表各 824 行、覆盖 70 家公司、13 个报告期；知识库 473 篇研报、34,435 个语义分块 |
+
+与秘塔 AI、DeepSeek、豆包的七维度能力对比：
+
+![四系统七维度能力雷达图](docs/images/benchmark-radar-7dim.png)
+
+完整实验数据见 [`docs/实验结论.md`](docs/实验结论.md)。
+
+### 效果一览
+
+| 知识增强型深度问答 | Thinking Map 推理链路 | 字段级数据溯源 |
+|---|---|---|
+| ![知识增强型深度问答](docs/images/screenshot-qa-knowledge.png) | ![Thinking Map](docs/images/screenshot-thinking-map.png) | ![数据溯源面板](docs/images/screenshot-provenance.png) |
 
 ---
 
@@ -17,20 +48,6 @@
 
 ---
 
-## 核心结果速览
-
-| 指标 | 结果 |
-|---|---|
-| 核心业绩指标表平均完整率 | 96.3 分（满分 100） |
-| 字段平均溯源置信度 | 0.82 |
-| 与主流平台七维度横向对比 | **87.4 分，排名第一**（7 维度中 3 项独占第一、1 项并列第一；秘塔 AI 86.8、DeepSeek 78.1、豆包 77.6） |
-| 消融实验 | 各增强组件均通过显著性检验；禁用 LLM 深度分析平均质量损失 24.2 分（Cohen's d ≥ 0.8） |
-| 数据规模 | 4 张主表各 824 行、覆盖 70 家公司、13 个报告期；知识库 473 篇研报、34,435 个语义分块 |
-
-完整实验数据见 [`docs/实验结论.md`](docs/实验结论.md)。
-
----
-
 ## 赛题任务与解法对照
 
 | 赛题任务 | 核心要求 | 本项目的做法 |
@@ -42,6 +59,10 @@
 ---
 
 ## 系统架构
+
+整体分为数据层、查询层、增强层与展示层四层，每层均设计独立降级路径：
+
+![系统总体四层架构](docs/images/architecture-4layer.png)
 
 ```
                      ┌──────────────────────────────────────────┐
