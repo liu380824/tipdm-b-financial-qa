@@ -1,5 +1,7 @@
 # 上市公司财报「智能问数」助手
 
+[**中文**](README.md) | [**English**](README.en.md)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/liu380824/tipdm-b-financial-qa?style=social)](https://github.com/liu380824/tipdm-b-financial-qa/stargazers)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](requirements.txt)
