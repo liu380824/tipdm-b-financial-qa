@@ -9,9 +9,30 @@
 [![Vue](https://img.shields.io/badge/Vue-3.5-42B883?logo=vuedotjs&logoColor=white)](smart-query-ui/)
 [![TipDM Cup](https://img.shields.io/badge/TipDM%20Cup-%E4%B8%80%E7%AD%89%E5%A5%96-gold)](docs/赛题-B题-题目说明.md)
 
+当前版本 **v1.0** · [发布说明](https://github.com/liu380824/tipdm-b-financial-qa/releases/tag/v1.0) · [全部版本](https://github.com/liu380824/tipdm-b-financial-qa/releases)
+
 面向 A 股中药上市公司财报的自然语言问数系统，打通 **非结构化财报 PDF → 结构化财务数据库 → 自然语言理解 → SQL 生成 → 数据查询 → 可视化 → 归因分析** 的完整链路，支持多轮对话、意图澄清、多意图自主规划与结果溯源。
 
 ![系统首页与全局导航](docs/images/screenshot-home.png)
+
+<details>
+<summary><b>目录</b></summary>
+
+- [核心结果速览](#核心结果速览)
+- [竞赛信息](#竞赛信息)
+- [赛题任务与解法对照](#赛题任务与解法对照)
+- [系统架构](#系统架构)
+- [目录结构](#目录结构)
+- [环境](#环境)
+- [快速开始](#快速开始)
+- [评测与消融](#评测与消融)
+- [关键参数](#关键参数)
+- [结果产物说明](#结果产物说明)
+- [数据与版权说明](#数据与版权说明)
+- [常见问题](#常见问题)
+- [许可](#许可)
+
+</details>
 
 ## 核心结果速览
 

@@ -1,0 +1,49 @@
+# GitHub 自动生成 Release Notes 的分类规则
+# 依据 PR 标签归类，发布时用 --generate-notes 或网页「Generate release notes」生效
+# 文档：https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
+
+changelog:
+  exclude:
+    labels:
+      - duplicate
+      - invalid
+      - wontfix
+      - ignore-for-release
+    authors:
+      - dependabot
+      - dependabot[bot]
+
+  categories:
+    - title: 破坏性变更
+      labels:
+        - breaking-change
+        - breaking
+
+    - title: 新功能
+      labels:
+        - feature
+        - enhancement
+
+    - title: 缺陷修复
+      labels:
+        - bug
+        - fix
+        - regression
+
+    - title: 数据与评测
+      labels:
+        - data
+        - benchmark
+        - ablation
+
+    - title: 文档与工程
+      labels:
+        - documentation
+        - docs
+        - chore
+        - ci
+        - build
+
+    - title: 其他变更
+      labels:
+        - "*"
